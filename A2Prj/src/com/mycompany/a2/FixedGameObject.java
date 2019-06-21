@@ -1,6 +1,5 @@
 package com.mycompany.a2;
 
-import  java.util.Random;
 
 public abstract class FixedGameObject extends GameObject {
 	private int speed;
@@ -12,13 +11,23 @@ public abstract class FixedGameObject extends GameObject {
 		// This constructs a new space station fixed object 
 		
 		super(color);
-		this.speed = 0;
-		this.direction = 0;
+		this.setSpeed(0);
+		this.setDirection(0);
 		FixedGameObject.nextId = GetNextId(nextId);
 		this.id = nextId;
 		
 	}
 	
+	private void setDirection(int i) {
+		this.direction = i;
+		
+	}
+
+	private void setSpeed(int i) {
+		this.speed = i;
+		
+	}
+
 	public int GetNextId(int id) {
 		return id = id + 1;
 	}
