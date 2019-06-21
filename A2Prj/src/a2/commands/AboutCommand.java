@@ -1,4 +1,4 @@
-package com.mycompany.a2;
+package a2.commands;
 
 import com.codename1.ui.Command;
 import com.codename1.ui.Dialog;
