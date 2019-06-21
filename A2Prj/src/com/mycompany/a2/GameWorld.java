@@ -140,14 +140,12 @@ public class GameWorld extends Observable implements IGameWorld {
 				SteerableMissileLauncher MML = ps.getMissleLauncher();
 				playerShip = true;
 				if(ps.getMissileCount() > 0) {
+					
 					ps.setMissileCount(ps.getMissileCount() - 1);
-					//this next line is wonky, will fix later but for now no time
-					//functionality remains
 					this.setMissileCount(this.getMissileCount() - 1);
 					Missile msl = new Missile(ps.getLoc(), MML.getDirection(), ps.getSpeed(), ps.getColor(), ps.getShip());
 					store.add(msl);
 					System.out.println("PLAYERSHIP has fired a missile!");
-					
 					
 					msl.toString();
 					System.out.println(msl);
@@ -163,17 +161,8 @@ public class GameWorld extends Observable implements IGameWorld {
 			System.out.println("No player ship");
 		}
 		
-		//TestCode
-		//remove and add to proxy game world after this delivery
 		this.setChanged();
 		this.notifyObservers(new GameWorldProxy(this));
-		
-	}
-
-	private void setMissileCount(int i) {
-		// Helper funtion so the display works better.
-		// need to overhaul how missiles are tracked
-		this.missileCount = i;
 		
 	}
 
@@ -182,7 +171,6 @@ public class GameWorld extends Observable implements IGameWorld {
 		boolean nonPlayerShip = false;
 		for(int i = 0; i < store.size() && !nonPlayerShip; i++) {
 			//iterate until nps is found
-			
 			if(store.elementAt(i) instanceof NonPlayerShip) {
 				NonPlayerShip nps = (NonPlayerShip) store.elementAt(i);
 				nonPlayerShip = true;
@@ -190,9 +178,7 @@ public class GameWorld extends Observable implements IGameWorld {
 					nps.setMissileCount(nps.getMissileCount() - 1);
 					Missile msl = new Missile(nps.getLoc(), nps.getDirection(), nps.getSpeed(), nps.getColor(), nps.getShip());
 					//need to add target (coords of PS)
-					
 					store.add(msl);
-					
 					System.out.println("NONPLAYERSHIP has fired a missile!");
 					msl.toString();
 					System.out.println(msl);
@@ -200,16 +186,13 @@ public class GameWorld extends Observable implements IGameWorld {
 				}
 				else
 					System.out.println("NONPLAYERSHIP has no more missiles!");
-				
-				
 			}
 			
 		}
 		if(!nonPlayerShip) {
 			System.out.println("No non player ship. ");
 		}
-		//TestCode
-		//remove and add to proxy game world after this delivery
+
 		this.setChanged();
 		this.notifyObservers(new GameWorldProxy(this));
 	}
@@ -236,14 +219,12 @@ public class GameWorld extends Observable implements IGameWorld {
 		boolean playerShip = false;
 		for(int i = 0; i < store.size() && !playerShip; i++) {
 			//keep iterating until a player ship is found
-			
 			if(store.elementAt(i) instanceof PlayerShip) {
 				PlayerShip ps = (PlayerShip) store.elementAt(i);
 				playerShip = true;
 				mag = ps.getMissileCount();
 				
 				System.out.println("Number of Player Missiles = " + mag);
-				
 			}
 		}
 		if(playerShip == false) {
@@ -329,18 +310,10 @@ public class GameWorld extends Observable implements IGameWorld {
 			}
 		}
 		
-		//TestCode
-		//remove and add to proxy game world after this delivery
 		this.setChanged();
 		this.notifyObservers(new GameWorldProxy(this));
 		
  }
-
-	public void setTime(int t) {
-		// Set game world time
-		this.time = this.getTime() + t;
-		
-	}
 
 	//delivery 3
 	
@@ -350,12 +323,10 @@ public class GameWorld extends Observable implements IGameWorld {
 		PlayerShip ps = null;
 		for(int i = 0; i < store.size() && !playerShip; i++) {
 			//keep iterating until a player ship is found
-			
 			if(store.elementAt(i) instanceof PlayerShip) {
 				ps = (PlayerShip) store.elementAt(i);
 				playerShip = true;
 			}
-			
 		}
 		
 		if(!playerShip) {
@@ -363,14 +334,13 @@ public class GameWorld extends Observable implements IGameWorld {
 		}
 		else if(playerShip) {
 		
-		SteerableMissileLauncher MML;
-		MML = ps.getMissleLauncher();
-		MML.rotateLeft();
+			SteerableMissileLauncher MML;
+			MML = ps.getMissleLauncher();
+			MML.rotateLeft();
 		
-		System.out.println("Dir of MML = " + MML.getDirectionML());
+			System.out.println("Dir of MML = " + MML.getDirectionML());
 		}
-		//TestCode
-		//remove and add to proxy game world after this delivery
+
 		this.setChanged();
 		this.notifyObservers(new GameWorldProxy(this));
 	}
@@ -382,7 +352,6 @@ public class GameWorld extends Observable implements IGameWorld {
 		PlayerShip ps = null;
 		for(int i = 0; i < store.size() && !playerShip; i++) {
 			//keep iterating until a player ship is found
-			
 			if(store.elementAt(i) instanceof PlayerShip) {
 				ps = (PlayerShip) store.elementAt(i);
 				playerShip = true;
@@ -394,15 +363,12 @@ public class GameWorld extends Observable implements IGameWorld {
 			System.out.println("Error: Please add player ship first");
 		}
 		else if(playerShip) {
-		
-		SteerableMissileLauncher MML;
-		MML = ps.getMissleLauncher();
-		MML.rotateRight();
-		
-		System.out.println("Dir of MML = " + MML.getDirectionML());
+			SteerableMissileLauncher MML;
+			MML = ps.getMissleLauncher();
+			MML.rotateRight();
+			System.out.println("Dir of MML = " + MML.getDirectionML());
 		}
-		//TestCode
-		//remove and add to proxy game world after this delivery
+
 		this.setChanged();
 		this.notifyObservers(new GameWorldProxy(this));
 	}
@@ -414,12 +380,10 @@ public class GameWorld extends Observable implements IGameWorld {
 		PlayerShip ps = null;
 		for(int i = 0; i < store.size() && !playerShip; i++) {
 			//keep iterating until a player ship is found
-			
 			if(store.elementAt(i) instanceof PlayerShip) {
 				ps = (PlayerShip) store.elementAt(i);
 				playerShip = true;
-			}
-			
+			}	
 		}
 		if(!playerShip) {
 			System.out.println("Error: Please add player ship first");
@@ -435,12 +399,10 @@ public class GameWorld extends Observable implements IGameWorld {
 			}
 			
 		}
-		//TestCode
-		//remove and add to proxy game world after this delivery
+		
 		this.setChanged();
 		this.notifyObservers(new GameWorldProxy(this));
-		
-		
+			
 	}
 
 	public void asteroidKilled() {
@@ -456,9 +418,7 @@ public class GameWorld extends Observable implements IGameWorld {
 			PlayerShip ps = null;
 			for(int i = 0; i < store.size(); i++) {
 				//keep iterating until a player ship is found
-				
 				if(store.elementAt(i) instanceof PlayerShip) {
-					//ps = (PlayerShip) store.elementAt(i);
 					playerShip = true;
 					ps = (PlayerShip) store.elementAt(i);
 					
@@ -475,23 +435,19 @@ public class GameWorld extends Observable implements IGameWorld {
 			}
 			
 			if(playerShip && asteroid) {
-				//unfortunately have to loop again
-				//should refactor this
 				//flag for asteroid found
 				boolean flag = false;
 				for(int i = 0; i < store.size() && !flag; i++) {
 					if(store.elementAt(i) instanceof Asteroids) {
 						store.removeElementAt(i);
-						this.score = this.score + 10;
+						this.setScore(this.getScore() + 10);
 						ps.decMissileCount();
 						flag = true;
 					}
 				}
 				System.out.println("Asteroid destroyed!");
-				
 			}
-			//TestCode
-			//remove and add to proxy game world after this delivery
+
 			this.setChanged();
 			this.notifyObservers(new GameWorldProxy(this));
 	}
@@ -503,39 +459,40 @@ public class GameWorld extends Observable implements IGameWorld {
 		if(store.size() == 0) {
 			System.out.println("Error: The game world is empty!");
 		}
-		boolean playerShip = false;
-		boolean nonPlayerShip = false;
-		boolean flag = false;
-		boolean missile = false;
-		PlayerShip ps = null;
-		NonPlayerShip nps = null;
+		else if(store.size() != 0) {
+			boolean playerShip = false;
+			boolean nonPlayerShip = false;
+			boolean flag = false;
+			boolean missile = false;
+			PlayerShip ps = null;
+			NonPlayerShip nps = null;
 		
-		//again this loop , need to create helper function for readabilty
-		for(int i = 0; i < store.size() && !flag; i++) {
-			if(store.elementAt(i) instanceof PlayerShip) {
-				playerShip = true;
-				ps = (PlayerShip) store.elementAt(i);
-				
-			}
-			if(store.elementAt(i) instanceof NonPlayerShip) {
-				nonPlayerShip = true;
-				nps = (NonPlayerShip) store.elementAt(i);
-				
-			}
-			if(store.elementAt(i) instanceof Missile && playerShip && nonPlayerShip) {
-				Missile msl = (Missile) store.elementAt(i);
-				Ship ship = msl.getShip();
-				if(ship instanceof PlayerShip) {
-					missile = true;
-					store.removeElementAt(i);
-					store.removeElement(nps);	
+			//again this loop , need to create helper function for readability
+			for(int i = 0; i < store.size() && !flag; i++) {
+				if(store.elementAt(i) instanceof PlayerShip) {
+					playerShip = true;
+					ps = (PlayerShip) store.elementAt(i);
 				}
-				else {
-					missile = false;
+				if(store.elementAt(i) instanceof NonPlayerShip) {
+					nonPlayerShip = true;
+					nps = (NonPlayerShip) store.elementAt(i);
 				}
-				
-			}
-		}
+				//Flawed Logic, can still get shot down if there is no nonPlayerShip
+				//will update when "closeness" matters
+				if(store.elementAt(i) instanceof Missile && playerShip && nonPlayerShip) {
+					Missile msl = (Missile) store.elementAt(i);
+					Ship ship = msl.getShip();
+						if(ship instanceof PlayerShip) {
+							missile = true;
+							store.removeElementAt(i);
+							store.removeElement(nps);	
+						}
+						else {
+							missile = false;
+						}
+				}
+			}//end loop
+			
 		if(!playerShip) {
 			System.out.println("Error: Add player ship!");
 		}
@@ -549,15 +506,13 @@ public class GameWorld extends Observable implements IGameWorld {
 			System.out.println("Player has eliminated nps!");
 			this.setScore(this.getScore() + 20); 
 		}
-		//TestCode
-		//remove and add to proxy game world after this delivery
+		
 		this.setChanged();
 		this.notifyObservers(new GameWorldProxy(this));
 	
-		
-		
-	}
-	
+		}//end else if
+	}//end class
+
 
 	public void psShotDown() {
 		// A non player ship as struck and shot down a player ship with a missile
@@ -623,42 +578,33 @@ public class GameWorld extends Observable implements IGameWorld {
 				System.out.println("Lives = " + this.getLives());
 			}
 		}
-		//TestCode
-		//remove and add to proxy game world after this delivery
+
 		this.setChanged();
 		this.notifyObservers(new GameWorldProxy(this));
-	}
-
-			
-	
-
-	private void setLives(int i) {
-		// Set GameWorld Lives
-		this.numLives = i;
 	}
 
 	public void psCrashIntoAsteroid() {
 		// The player ship has crashed into an asteroid
 		// Delete asteroid, player ship, dec lives and check for game over
-		if(store.size() == 0) {
-			System.out.println("Error: The game world is empty!");
-		}
 		boolean playerShip = false;
 		boolean Asteroid = false;
 		boolean flag = false;
-		PlayerShip ps = null;
-		NonPlayerShip nps = null;
 		Asteroids ast = null;
+		PlayerShip ps = null;
+		if(store.size() == 0) {
+			System.out.println("Error: The game world is empty!");
+		}
+		else if(store.size() != 0) {
 		
-		for(int i = 0; i < store.size(); i++) {
-			if(store.elementAt(i) instanceof PlayerShip) {
-				playerShip = true;
-				ps = (PlayerShip) store.elementAt(i);
-					
-			}
-			if(store.elementAt(i) instanceof Asteroids) {
-				Asteroid = true;
-				ast = (Asteroids) store.elementAt(i);
+			for(int i = 0; i < store.size(); i++) {
+				if(store.elementAt(i) instanceof PlayerShip) {
+					playerShip = true;
+					ps = (PlayerShip) store.elementAt(i);	
+				}
+				if(store.elementAt(i) instanceof Asteroids) {
+					Asteroid = true;
+					ast = (Asteroids) store.elementAt(i);
+				}
 			}
 		}
 		if(!playerShip) {
@@ -688,11 +634,11 @@ public class GameWorld extends Observable implements IGameWorld {
 				System.out.println("Lives = " + this.getLives());
 			}
 		}
-		//TestCode
-		//remove and add to proxy game world after this delivery
+		
 		this.setChanged();
 		this.notifyObservers(new GameWorldProxy(this));
 	}
+
 
 	public void shipCollision() {
 		// The player ship has collided with a non player ship
@@ -758,10 +704,7 @@ public class GameWorld extends Observable implements IGameWorld {
 			System.out.println("Error: The game world is empty!");
 		}
 		
-		int asteroids= 0;
-		boolean flag = false;
-		int check = 0;
-		
+		int asteroids= 0;;
 		Asteroids ast1 = null;
 		Asteroids ast0 = null;
 		
@@ -789,15 +732,11 @@ public class GameWorld extends Observable implements IGameWorld {
 			store.removeElement(ast1);
 			System.out.println("Astroid Collision!");
 		}
-		//TestCode
-		//remove and add to proxy game world after this delivery
 		this.setChanged();
 		this.notifyObservers(new GameWorldProxy(this));	
 			
 	}
 		
-
-
 	public void turnPsLeft() {
 		// This method turns the player shift left (CCW) by a small amount
 		if(store.size() == 0) {
@@ -821,19 +760,12 @@ public class GameWorld extends Observable implements IGameWorld {
 			else if(!playerShip){
 				System.out.println("Error: No Player Ship!");
 			}
-			//TestCode
-			//remove and add to proxy game world after this delivery
+			
 			this.setChanged();
 			this.notifyObservers(new GameWorldProxy(this));
 		
 	}
 	
-	public void findPlayerShip() {
-		//this is merely a helper function to avoid unnecessary reuse of loops
-		//finds if a player ship is in the game world
-
-	}
-
 	public void accelPsForward() {
 		// Accelerates the PS forward
 		// Cannot go faster than 20 units/second
@@ -868,8 +800,6 @@ public class GameWorld extends Observable implements IGameWorld {
 			else if(!playerShip){
 				System.out.println("Error: No Player Ship!");
 			}
-			//TestCode
-			//remove and add to proxy game world after this delivery
 			this.setChanged();
 			this.notifyObservers(new GameWorldProxy(this));
 	}
@@ -908,8 +838,7 @@ public class GameWorld extends Observable implements IGameWorld {
 			else if(!playerShip){
 				System.out.println("Error: No Player Ship!");
 			}
-			//TestCode
-			//remove and add to proxy game world after this delivery
+
 			this.setChanged();
 			this.notifyObservers(new GameWorldProxy(this));
 		
@@ -949,8 +878,7 @@ public class GameWorld extends Observable implements IGameWorld {
 			store.removeElement(nps);
 			System.out.println("An asteroid has collided with and destoryed a Non Player Ship!");
 		}
-		//TestCode
-		//remove and add to proxy game world after this delivery
+
 		this.setChanged();
 		this.notifyObservers(new GameWorldProxy(this));
 		
@@ -970,7 +898,6 @@ public class GameWorld extends Observable implements IGameWorld {
 				if(store.elementAt(i) instanceof PlayerShip) {
 					playerShip = true;
 					ps = (PlayerShip) store.elementAt(i);
-					
 				}
 			}
 			if(playerShip) {
@@ -980,8 +907,6 @@ public class GameWorld extends Observable implements IGameWorld {
 			else if(!playerShip){
 				System.out.println("Error: No Player Ship!");
 			}
-			//TestCode
-			//remove and add to proxy game world after this delivery
 			this.setChanged();
 			this.notifyObservers(new GameWorldProxy(this));
 	}
@@ -1012,22 +937,10 @@ public class GameWorld extends Observable implements IGameWorld {
 			else if(!playerShip){
 				System.out.println("Error: No Player Ship!");
 			}
-			//TestCode
-			//remove and add to proxy game world after this delivery
 			this.setChanged();
 			this.notifyObservers(new GameWorldProxy(this));
 		
 		
-	}
-	
-	public int getScore() {
-		return this.score;
-	}
-
-	public int getTime() {
-		// This is a legacy function and isn't used
-		// Keeping just in case
-		return time;
 	}
 	
 	public void gameOver() {
@@ -1054,14 +967,20 @@ public class GameWorld extends Observable implements IGameWorld {
 		
 	}
 
-	public int getLives() {
-		// Returns the lives 
-		return this.numLives;
 
+	//*******Getters and Setters*********
+
+	//Getters
+	public int getMissileCount() {
+		return this.missileCount;
 	}
-
-	public boolean getSound() {
-		return this.Sound;
+	
+	public double getLength() {
+		return length;
+	}
+	
+	public double getWidth() {
+		return width;
 	}
 	
 	public String whatSound() {
@@ -1075,38 +994,57 @@ public class GameWorld extends Observable implements IGameWorld {
 		}
 		return "Off";
 	}
-	public void setSound(boolean sound) {
-		this.Sound = sound;
-		
-		//TestCode
-		//remove and add to proxy game world after this delivery
-		this.setChanged();
-		this.notifyObservers(new GameWorldProxy(this));
-	}
+	
+	public int getLives() { 
+		return this.numLives;
 
-	public int getMissileCount() {
-		return this.missileCount;
 	}
 	
+	public boolean getSound() {
+		return this.Sound;
+	}
+	
+	public int getTime() {
+		return time;
+	}
+	
+	public int getScore() {
+		return this.score;
+	}
+	
+	
+	//Setters
 	public void setScore(int s) {
 		this.score = s;
-	}
-
-	public double getWidth() {
-		return width;
 	}
 
 	public void setWidth(double width) {
 		this.width = width;
 	}
 
-	public double getLength() {
-		return length;
-	}
-
 	public void setLength(double length) {
 		this.length = length;
 	}
 	
+	public void setSound(boolean sound) {
+		this.Sound = sound;
+		//this is for PointView
+		this.setChanged();
+		this.notifyObservers(new GameWorldProxy(this));
+	}
+	
+	public void setTime(int t) {
+		this.time = this.getTime() + t;	
+	}
+	
+	private void setMissileCount(int i) {
+		this.missileCount = i;
+	
+	}
+	
+	
+	private void setLives(int i) {
+		this.numLives = i;
+	}
 	
 }//End Class

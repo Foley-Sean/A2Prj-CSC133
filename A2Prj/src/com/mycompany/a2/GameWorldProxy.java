@@ -4,6 +4,7 @@ import java.util.Observable;
 
 public class GameWorldProxy extends Observable implements IGameWorld {
 	//This class acts a mediator between the actual GameWorld class and the viewers
+	//Only the getters are allowed to be used
 	
 	private GameWorld gw;
 	
