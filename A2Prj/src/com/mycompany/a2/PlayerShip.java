@@ -1,0 +1,62 @@
+package com.mycompany.a2;
+
+public class PlayerShip extends Ship implements ISteerable {
+
+	private SteerableMissileLauncher MML;
+	
+	
+	public PlayerShip(int color, int speed, int dir) {
+		// player ship construction
+		super(color, speed, dir);
+		
+		this.MML = new SteerableMissileLauncher(getLocation(), color, speed, dir);
+		
+		
+	}
+	
+	public String toString() {
+		String parentDesc = super.toString();
+		
+		return "Player Ship: " + parentDesc + " MML Direction: " + this.MML.getDirectionML();
+		
+	}
+
+	public SteerableMissileLauncher getMissleLauncher() {
+		// Return direction of missile launcher
+		return this.MML;
+		
+	}
+	
+	public int showMissleCount() {
+		int mag = this.getMissileCount();
+		
+		return mag;
+		
+	}
+	
+	
+	
+	public void rotateLauncher() {
+		//might end up using this instead
+	}
+
+	@Override
+	public void rotateRight() {
+		// This is an override of the rotateRight function in ISteerable
+		// Rotates the player ship right by a small amount.
+		this.setDirection(this.getDirection() + 10);
+	}
+
+	@Override
+	public void rotateLeft() {
+		// This is an override of the rotateLeft function in ISteerable
+		// Rotates the player ship left by a small amount
+		this.setDirection(this.getDirection() - 10);
+		
+		
+		
+	}
+	
+	
+
+}
