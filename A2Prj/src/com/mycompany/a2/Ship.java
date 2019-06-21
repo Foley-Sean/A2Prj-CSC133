@@ -41,6 +41,7 @@ public abstract class Ship extends MoveableGameObject {
 		
 	}
 	
+	//Getters and Setters
 	
 	public int getSize() {
 		return this.size;
