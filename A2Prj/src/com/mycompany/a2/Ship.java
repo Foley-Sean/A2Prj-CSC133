@@ -6,9 +6,6 @@ public abstract class Ship extends MoveableGameObject {
 	private int missileCount;
 	private int size;
 	private static Random random = new Random();
-	private final static int MIN = 0;
-	private final static int MAX_SPEED = 15;
-	private final static int MAX_DIR = 359;   // 0 - 359 = 360 degrees
 	private final static int MIN_SIZE = 15;
 	private final static int MAX_SIZE = 25;
 	
@@ -40,7 +37,6 @@ public abstract class Ship extends MoveableGameObject {
 			this.missileCount = 10;
 			
 		}
-		
 		
 		
 	}

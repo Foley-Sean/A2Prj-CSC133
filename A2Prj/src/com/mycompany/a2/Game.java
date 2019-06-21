@@ -23,6 +23,7 @@ import a2.commands.IncreasePlayerSpeedCommand;
 import a2.commands.JumpThroughHyperSpaceCommand;
 import a2.commands.LoadPsMissilesCommand;
 import a2.commands.MapCommand;
+import a2.commands.NewCommand;
 import a2.commands.NpsDestroyPsCommand;
 import a2.commands.NpsFireMissileCommand;
 import a2.commands.PrintCommand;

@@ -25,7 +25,6 @@ public class Missile extends MoveableGameObject {
 		String myDesc = " fuel level = " + this.getFuel();
 		
 		if(ps instanceof PlayerShip) {
-			//there is an error in this logic - always returns non player missile (source is always false or perhaps somehting else in game world)
 			return "Player Missile: " + parentDesc + myDesc;
 		}
 		else if(ps instanceof NonPlayerShip) {
@@ -39,6 +38,7 @@ public class Missile extends MoveableGameObject {
 	public void setDirection(int delta) {
 		//this is legacy functionality
 		//direction of missiles is handled elsewhere
+		//might have to adjust this for collision detection
 		if(this.source) {
 			this.setDirection(this.getDirection() + delta);
 		}
@@ -57,7 +57,7 @@ public class Missile extends MoveableGameObject {
 	public int getFuel() {
 		return this.fuelLevel;
 	}
-	//might not need some of these
+	
 	public void setShip() {
 		this.ps = this.getShip();
 	}

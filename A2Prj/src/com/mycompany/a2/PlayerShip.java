@@ -22,7 +22,6 @@ public class PlayerShip extends Ship implements ISteerable {
 	}
 
 	public SteerableMissileLauncher getMissleLauncher() {
-		// Return direction of missile launcher
 		return this.MML;
 		
 	}
@@ -34,11 +33,6 @@ public class PlayerShip extends Ship implements ISteerable {
 		
 	}
 	
-	
-	
-	public void rotateLauncher() {
-		//might end up using this instead
-	}
 
 	@Override
 	public void rotateRight() {
