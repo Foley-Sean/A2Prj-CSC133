@@ -8,24 +8,24 @@ import com.codename1.ui.Dialog;
 import com.codename1.ui.Display;
 import com.codename1.ui.geom.Point2D;
 
-public class GameWorld extends Observable {
+public class GameWorld extends Observable implements IGameWorld {
 	
 	public Vector<GameObject> store = new Vector<GameObject>();	//vector storing all game objects
 	private double length;
 	private double width;
-	private static int numLives;
+	private int numLives;
 	private int missileCount;
 	private boolean Sound;
-	private static int score;
-	private static int time;
+	private int score;
+	private int time;
 	
 	public void init() {
 		this.length = 768;
 		this.width = 1024;
-		GameWorld.numLives = 3;
+		this.numLives = 3;
 		this.missileCount = 10;
-		GameWorld.score = 0;
-		GameWorld.time =  0;
+		this.score = 0;
+		this.time =  0;
 		
 	
 	}
@@ -546,7 +546,7 @@ public class GameWorld extends Observable {
 		}
 		else if(playerShip && nonPlayerShip && missile) {
 			System.out.println("Player has eliminated nps!");
-			this.score = this.score + 20;
+			this.setScore(this.getScore() + 20); 
 		}
 		//TestCode
 		//remove and add to proxy game world after this delivery
@@ -556,6 +556,7 @@ public class GameWorld extends Observable {
 		
 		
 	}
+	
 
 	public void psShotDown() {
 		// A non player ship as struck and shot down a player ship with a missile
@@ -610,15 +611,15 @@ public class GameWorld extends Observable {
 		
 		else if(playerShip && nonPlayerShip && missile) {
 			//again another loop to find a missile and find the ps
-			GameWorld.numLives--;
-			if(GameWorld.numLives == 0) {
+			this.setLives(this.getLives() - 1);
+			if(this.getLives() == 0) {
 				System.out.println("No lives left - Game Over!");
 				this.gameOver();
 				
 			}
-			else if(GameWorld.numLives > 0) {
+			else if(this.getLives() > 0) {
 				System.out.println("Player Ship Eliminated!");
-				System.out.println("Lives = " + GameWorld.numLives);
+				System.out.println("Lives = " + this.getLives());
 			}
 		}
 		//TestCode
@@ -629,6 +630,11 @@ public class GameWorld extends Observable {
 
 			
 	
+
+	private void setLives(int i) {
+		// Set GameWorld Lives
+		this.numLives = i;
+	}
 
 	public void psCrashIntoAsteroid() {
 		// The player ship has crashed into an asteroid
@@ -665,20 +671,20 @@ public class GameWorld extends Observable {
 		}
 		
 		if(playerShip && Asteroid) {
-			GameWorld.numLives--;
-			if(GameWorld.numLives == 0){
+			this.setLives(this.getLives() - 1);
+			if(this.getLives() == 0){
 				System.out.println("Player Ship Has Crashed Into Asteroid!");
 				store.removeElement(ast);
 				store.removeElement(ps);
-				System.out.println("Lives = " + GameWorld.numLives);
+				System.out.println("Lives = " + this.getLives());
 				System.out.println("Player is out of lives. Game over!.");
 				this.gameOver();
 			}
-			else if(GameWorld.numLives > 0) {
+			else if(this.getLives() > 0) {
 				System.out.println("Payer Ship Has Crashed Into Asteroid!");
 				store.removeElement(ast);
 				store.removeElement(ps);
-				System.out.println("Lives = " + GameWorld.numLives);
+				System.out.println("Lives = " + this.getLives());
 			}
 		}
 		//TestCode
@@ -718,18 +724,18 @@ public class GameWorld extends Observable {
 		}
 		
 		if(playerShip && nonPlayerShip) {
-			GameWorld.numLives--;
-			if(GameWorld.numLives == 0) {
+			this.setLives(this.getLives() - 1);
+			if(this.getLives() == 0) {
 				System.out.println("The player ship has collided with a non player ship!");
 				System.out.println("No Lives Left - Game Over");
 				this.gameOver();
 			}
-			else if(GameWorld.numLives > 0) {
+			else if(this.getLives() > 0) {
 				for(int i = 0; i < store.size() && !flag; i++) {
 					if(store.elementAt(i) instanceof NonPlayerShip) {
 						store.removeElementAt(i);
 						System.out.println("The player ship has collided with a non player ship!");
-						System.out.println("Lives Left = " + GameWorld.numLives);
+						System.out.println("Lives Left = " + this.getLives());
 						flag = true;
 						
 					}
@@ -1014,7 +1020,7 @@ public class GameWorld extends Observable {
 	}
 	
 	public int getScore() {
-		return GameWorld.score;
+		return this.score;
 	}
 
 	public int getTime() {
@@ -1028,7 +1034,14 @@ public class GameWorld extends Observable {
 		System.out.println("Score = " + this.getScore());
 		System.out.println("Time = " + this.getTime());
 		
-		System.exit(0);
+		Boolean bOk = Dialog.show("Game Over", "Do you want to try again?" + "\n" + "Score: " + this.getScore()
+		+ "\n" + "Time:" + this.getTime(), "Yes", "No");
+		if(bOk) {
+			new Game();
+		}
+		else if (!bOk) {
+			Display.getInstance().exitApplication();
+		}
 	}
 
 	public void quit() {
@@ -1072,6 +1085,10 @@ public class GameWorld extends Observable {
 
 	public int getMissileCount() {
 		return this.missileCount;
+	}
+	
+	public void setScore(int s) {
+		this.score = s;
 	}
 	
 	

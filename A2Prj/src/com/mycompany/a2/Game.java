@@ -58,7 +58,7 @@ public class Game extends Form {
 		gw.addObserver(pv);
 		gw.init();
 		setLayout(new BorderLayout());
-		//play is no longer needed?
+		//play is no longer needed
 		//play();
 		createButtons();
 		createBindings();
@@ -67,8 +67,6 @@ public class Game extends Form {
 		pv.getStyle().setBorder(Border.createLineBorder(3, ColorUtil.BLACK));
 		add(BorderLayout.CENTER, mv);
 		mv.getStyle().setBorder(Border.createLineBorder(3, ColorUtil.BLACK));
-
-		//createCommandObjects();
 		
 		this.show();
 	
@@ -78,7 +76,6 @@ public class Game extends Form {
 	private void createSideMenu() {
 		// Create Side Menu and add items to it
 		
-		//create side menu and add items
 		Toolbar myToolbar = new Toolbar();
 		setToolbar(myToolbar);
 		this.setTitle("Asteroids");
@@ -122,8 +119,8 @@ public class Game extends Form {
 
 	private void createBindings() {
 		// Map key bindings that don't have buttons
-		//accel PS
 		
+		//accel PS
 		IncreasePlayerSpeedCommand myAccel = new IncreasePlayerSpeedCommand(gw);
 		addKeyListener(-91, myAccel);
 		//Deccel PS
