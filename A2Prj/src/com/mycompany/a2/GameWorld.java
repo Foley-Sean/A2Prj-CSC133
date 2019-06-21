@@ -305,14 +305,24 @@ public class GameWorld extends Observable {
 		else {
 			if(obj) {
 				System.out.println("Moveable objects have moved.");
-			
 				if(ISS) {
 					if(myStation.getLight()) {
-				System.out.println("The Space Station light is on!");
-						}
-					else if(!myStation.getLight() && ISS) {
-				System.out.println("The Space Station light is off!");
-						}
+						System.out.println("The Space Staion light is on!");
+					}
+					else if(!myStation.getLight()) {
+						System.out.println("The Space Station light is off!");
+					}
+				
+				}
+			}
+			else if(!obj) {
+				if(ISS) {
+					if(myStation.getLight()) {
+						System.out.println("The Space Staion light is on!");
+					}
+					else if(!myStation.getLight()) {
+						System.out.println("The Space Station light is off!");
+					}
 				
 				}
 			}
