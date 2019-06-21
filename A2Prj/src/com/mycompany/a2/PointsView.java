@@ -80,5 +80,4 @@ public class PointsView extends Container implements Observer {
 	}
 	
 
-
 }

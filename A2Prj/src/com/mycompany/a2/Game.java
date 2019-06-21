@@ -58,8 +58,6 @@ public class Game extends Form {
 		gw.addObserver(pv);
 		gw.init();
 		setLayout(new BorderLayout());
-		//play is no longer needed
-		//play();
 		createButtons();
 		createBindings();
 		createSideMenu();
@@ -171,6 +169,7 @@ public class Game extends Form {
 		//Quit the game
 		QuitCommand myQuit = new QuitCommand(gw);
 		addKeyListener('Q', myQuit);
+		
 		//display game state info
 		//This is a temporary function
 		MapCommand myMap = new MapCommand(gw);
@@ -182,10 +181,6 @@ public class Game extends Form {
 	}
 
 
-	private void createCommandObjects() {
-		// TODO Auto-generated method stub;
-	}
-
 	private void createButtons() {
 		// create container with all of the buttons
 		// also create the key bindings for button commands
@@ -194,8 +189,8 @@ public class Game extends Form {
 		buttonContainer.setLayout(new BoxLayout(BoxLayout.Y_AXIS));
 		this.add(BorderLayout.WEST, buttonContainer);
 		buttonContainer.add(new Label ("Commands"));
+		
 		//add all of the buttons
-		//might be a better way of doing this
 		Button buttonOne = new Button("+ Asteroid");  
 		buttonContainer.add(buttonOne);
 		AddAsteroidCommand myAddAsteroid = new AddAsteroidCommand(gw);
@@ -417,6 +412,7 @@ public class Game extends Form {
 		); //add actionlistener
 	}//play
 	
+	//this is legacy for q bind
 	public void quit() {
 		Label myLabel = new Label ("Are you sure you want to quit? (y/n):");
 		this.addComponent(myLabel);

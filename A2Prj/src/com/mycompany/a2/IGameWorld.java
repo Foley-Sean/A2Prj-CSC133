@@ -1,7 +1,7 @@
 package com.mycompany.a2;
 
 public interface IGameWorld {
-	
+
 	//interface that specifies all necessary GameWorld public methods
 	int getScore();
 	int getTime();
@@ -11,7 +11,5 @@ public interface IGameWorld {
 	int getMissileCount();
 	double getWidth();
 	double getLength();
-	
-	
 	
 }
