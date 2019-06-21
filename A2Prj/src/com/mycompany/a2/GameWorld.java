@@ -20,12 +20,13 @@ public class GameWorld extends Observable implements IGameWorld {
 	private int time;
 	
 	public void init() {
-		this.length = 768;
-		this.width = 1024;
-		this.numLives = 3;
-		this.missileCount = 10;
-		this.score = 0;
-		this.time =  0;
+		this.setLength(768);
+		this.setWidth(1024);
+		this.setLives(3);
+		this.setMissileCount(10);
+		this.setScore(0);
+		this.setTime(0);
+		this.setSound(true);
 		
 	
 	}
@@ -52,7 +53,7 @@ public class GameWorld extends Observable implements IGameWorld {
 		//TestCode
 		//remove and add to proxy game world after this delivery
 		this.setChanged();
-		this.notifyObservers();
+		this.notifyObservers(new GameWorldProxy(this));
 		
 	}
 
@@ -77,7 +78,7 @@ public class GameWorld extends Observable implements IGameWorld {
 		//TestCode
 		//remove and add to proxy game world after this delivery
 		this.setChanged();
-		this.notifyObservers();
+		this.notifyObservers(new GameWorldProxy(this));
 		
 		
 	}
@@ -95,7 +96,7 @@ public class GameWorld extends Observable implements IGameWorld {
 		//TestCode
 		//remove and add to proxy game world after this delivery
 		this.setChanged();
-		this.notifyObservers();
+		this.notifyObservers(new GameWorldProxy(this));
 		
 	}
 
@@ -124,7 +125,7 @@ public class GameWorld extends Observable implements IGameWorld {
 		//TestCode
 		//remove and add to proxy game world after this delivery
 		this.setChanged();
-		this.notifyObservers();
+		this.notifyObservers(new GameWorldProxy(this));
 	}
 
 	public void firePsMissile() {
@@ -165,7 +166,7 @@ public class GameWorld extends Observable implements IGameWorld {
 		//TestCode
 		//remove and add to proxy game world after this delivery
 		this.setChanged();
-		this.notifyObservers();
+		this.notifyObservers(new GameWorldProxy(this));
 		
 	}
 
@@ -210,7 +211,7 @@ public class GameWorld extends Observable implements IGameWorld {
 		//TestCode
 		//remove and add to proxy game world after this delivery
 		this.setChanged();
-		this.notifyObservers();
+		this.notifyObservers(new GameWorldProxy(this));
 	}
 
 	public void map() {
@@ -331,11 +332,11 @@ public class GameWorld extends Observable implements IGameWorld {
 		//TestCode
 		//remove and add to proxy game world after this delivery
 		this.setChanged();
-		this.notifyObservers();
+		this.notifyObservers(new GameWorldProxy(this));
 		
  }
 
-	private void setTime(int t) {
+	public void setTime(int t) {
 		// Set game world time
 		this.time = this.getTime() + t;
 		
@@ -371,7 +372,7 @@ public class GameWorld extends Observable implements IGameWorld {
 		//TestCode
 		//remove and add to proxy game world after this delivery
 		this.setChanged();
-		this.notifyObservers();
+		this.notifyObservers(new GameWorldProxy(this));
 	}
 	
 	//added for delivery 2 A2
@@ -403,7 +404,7 @@ public class GameWorld extends Observable implements IGameWorld {
 		//TestCode
 		//remove and add to proxy game world after this delivery
 		this.setChanged();
-		this.notifyObservers();
+		this.notifyObservers(new GameWorldProxy(this));
 	}
 
 	public void reloadMissiles() {
@@ -437,7 +438,7 @@ public class GameWorld extends Observable implements IGameWorld {
 		//TestCode
 		//remove and add to proxy game world after this delivery
 		this.setChanged();
-		this.notifyObservers();
+		this.notifyObservers(new GameWorldProxy(this));
 		
 		
 	}
@@ -492,7 +493,7 @@ public class GameWorld extends Observable implements IGameWorld {
 			//TestCode
 			//remove and add to proxy game world after this delivery
 			this.setChanged();
-			this.notifyObservers();
+			this.notifyObservers(new GameWorldProxy(this));
 	}
 
 	public void npsShotDown() {
@@ -551,7 +552,7 @@ public class GameWorld extends Observable implements IGameWorld {
 		//TestCode
 		//remove and add to proxy game world after this delivery
 		this.setChanged();
-		this.notifyObservers();
+		this.notifyObservers(new GameWorldProxy(this));
 	
 		
 		
@@ -625,7 +626,7 @@ public class GameWorld extends Observable implements IGameWorld {
 		//TestCode
 		//remove and add to proxy game world after this delivery
 		this.setChanged();
-		this.notifyObservers();
+		this.notifyObservers(new GameWorldProxy(this));
 	}
 
 			
@@ -690,7 +691,7 @@ public class GameWorld extends Observable implements IGameWorld {
 		//TestCode
 		//remove and add to proxy game world after this delivery
 		this.setChanged();
-		this.notifyObservers();
+		this.notifyObservers(new GameWorldProxy(this));
 	}
 
 	public void shipCollision() {
@@ -746,7 +747,7 @@ public class GameWorld extends Observable implements IGameWorld {
 		//TestCode
 		//remove and add to proxy game world after this delivery
 		this.setChanged();
-		this.notifyObservers();
+		this.notifyObservers(new GameWorldProxy(this));
 		
 	}
 
@@ -791,7 +792,7 @@ public class GameWorld extends Observable implements IGameWorld {
 		//TestCode
 		//remove and add to proxy game world after this delivery
 		this.setChanged();
-		this.notifyObservers();	
+		this.notifyObservers(new GameWorldProxy(this));	
 			
 	}
 		
@@ -823,7 +824,7 @@ public class GameWorld extends Observable implements IGameWorld {
 			//TestCode
 			//remove and add to proxy game world after this delivery
 			this.setChanged();
-			this.notifyObservers();
+			this.notifyObservers(new GameWorldProxy(this));
 		
 	}
 	
@@ -870,7 +871,7 @@ public class GameWorld extends Observable implements IGameWorld {
 			//TestCode
 			//remove and add to proxy game world after this delivery
 			this.setChanged();
-			this.notifyObservers();
+			this.notifyObservers(new GameWorldProxy(this));
 	}
 
 	public void accelPsBackwards() {
@@ -910,7 +911,7 @@ public class GameWorld extends Observable implements IGameWorld {
 			//TestCode
 			//remove and add to proxy game world after this delivery
 			this.setChanged();
-			this.notifyObservers();
+			this.notifyObservers(new GameWorldProxy(this));
 		
 	}
 
@@ -951,7 +952,7 @@ public class GameWorld extends Observable implements IGameWorld {
 		//TestCode
 		//remove and add to proxy game world after this delivery
 		this.setChanged();
-		this.notifyObservers();
+		this.notifyObservers(new GameWorldProxy(this));
 		
 		
 	}
@@ -982,7 +983,7 @@ public class GameWorld extends Observable implements IGameWorld {
 			//TestCode
 			//remove and add to proxy game world after this delivery
 			this.setChanged();
-			this.notifyObservers();
+			this.notifyObservers(new GameWorldProxy(this));
 	}
 
 	public void JumpThroughHyperspace() {
@@ -1014,7 +1015,7 @@ public class GameWorld extends Observable implements IGameWorld {
 			//TestCode
 			//remove and add to proxy game world after this delivery
 			this.setChanged();
-			this.notifyObservers();
+			this.notifyObservers(new GameWorldProxy(this));
 		
 		
 	}
@@ -1080,7 +1081,7 @@ public class GameWorld extends Observable implements IGameWorld {
 		//TestCode
 		//remove and add to proxy game world after this delivery
 		this.setChanged();
-		this.notifyObservers();
+		this.notifyObservers(new GameWorldProxy(this));
 	}
 
 	public int getMissileCount() {
@@ -1089,6 +1090,22 @@ public class GameWorld extends Observable implements IGameWorld {
 	
 	public void setScore(int s) {
 		this.score = s;
+	}
+
+	public double getWidth() {
+		return width;
+	}
+
+	public void setWidth(double width) {
+		this.width = width;
+	}
+
+	public double getLength() {
+		return length;
+	}
+
+	public void setLength(double length) {
+		this.length = length;
 	}
 	
 	

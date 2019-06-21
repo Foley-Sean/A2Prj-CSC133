@@ -18,7 +18,7 @@ public class PointsView extends Container implements Observer {
 	@Override
 	public void update(Observable observable, Object data) {
 		//Updates when the game changes
-		GameWorld gw = (GameWorld) observable;
+		IGameWorld gw = (IGameWorld) data;
 		
 		this.pointsValueLabel.setText("" + gw.getScore());
 		this.livesValueLabel.setText("" + gw.getLives());
