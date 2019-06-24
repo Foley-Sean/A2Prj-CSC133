@@ -122,8 +122,7 @@ public class GameWorld extends Observable implements IGameWorld {
 		System.out.println(PS);
 		}
 		
-		//TestCode
-		//remove and add to proxy game world after this delivery
+
 		this.setChanged();
 		this.notifyObservers(new GameWorldProxy(this));
 	}
