@@ -325,9 +325,10 @@ public class Game extends Form {
 				gw.map();
 				break;
 			//print current game state values	
-			case 'p' :
-				gw.print();
-				break;
+			//print no longer needed
+			//case 'p' :
+				//gw.print();
+				//break;
 				
 			//third delivery
 			//rotate PS MML CCW

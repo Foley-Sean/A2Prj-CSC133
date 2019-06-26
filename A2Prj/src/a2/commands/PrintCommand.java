@@ -14,7 +14,7 @@ private GameWorld gw;
 	
 	@Override 
 	public void actionPerformed(ActionEvent e) {
-		gw.print();
+		//gw.print();
 		//System.out.println("Asteroids Collided");
 	}
 
