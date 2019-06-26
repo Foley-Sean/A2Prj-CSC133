@@ -15,7 +15,7 @@ private GameWorld gw;
 	@Override 
 	public void actionPerformed(ActionEvent e) {
 		gw.asteroidHitNps();
-		System.out.println("Asteroid NPS Collision");
+		//System.out.println("Asteroid NPS Collision");
 	}
 
 }

@@ -616,23 +616,25 @@ public class GameWorld extends Observable implements IGameWorld {
 		boolean Asteroid = false;
 		Asteroids ast = null;
 		PlayerShip ps = null;
+		IIterator itr = col.getIterator();
 		
-		if(store.size() == 0) {
+		if(!itr.hasNext()) {
 			System.out.println("Error: The game world is empty!");
 		}
-		else if(store.size() != 0) {
-		
-			for(int i = 0; i < store.size(); i++) {
-				if(store.elementAt(i) instanceof PlayerShip) {
+		else if(itr.hasNext()) {
+			while(itr.hasNext()) {
+				GameObject obj = (GameObject) itr.getNext();
+				if(obj instanceof PlayerShip) {
 					playerShip = true;
-					ps = (PlayerShip) store.elementAt(i);	
+					ps = (PlayerShip) obj;	
 				}
-				if(store.elementAt(i) instanceof Asteroids) {
+				if(obj instanceof Asteroids) {
 					Asteroid = true;
-					ast = (Asteroids) store.elementAt(i);
+					ast = (Asteroids) obj;
 				}
 			}
 		}
+		//could clean up this logic
 		if(!playerShip) {
 			System.out.println("Error: There is no Player Ship!");
 		}
@@ -647,16 +649,16 @@ public class GameWorld extends Observable implements IGameWorld {
 			this.setLives(this.getLives() - 1);
 			if(this.getLives() == 0){
 				System.out.println("Player Ship Has Crashed Into Asteroid!");
-				store.removeElement(ast);
-				store.removeElement(ps);
+				col.remove(ast);
+				col.remove(ps);
 				System.out.println("Lives = " + this.getLives());
 				System.out.println("Player is out of lives. Game over!.");
 				this.gameOver();
 			}
 			else if(this.getLives() > 0) {
 				System.out.println("Payer Ship Has Crashed Into Asteroid!");
-				store.removeElement(ast);
-				store.removeElement(ps);
+				col.remove(ast);
+				col.remove(ps);
 				System.out.println("Lives = " + this.getLives());
 			}
 		}
@@ -670,24 +672,28 @@ public class GameWorld extends Observable implements IGameWorld {
 		// The player ship has collided with a non player ship
 		// The NPS is to be removed, number of lives decreased by 1
 		// If there are no lives left the game is over
-		if(store.size() == 0) {
-			System.out.println("Error: The game world is empty!");
-		}
+		IIterator itr = col.getIterator();
 		boolean playerShip = false;
 		boolean nonPlayerShip = false;
 		PlayerShip ps = null;
 		NonPlayerShip nps = null;
 		
+		if(!itr.hasNext()) {
+			System.out.println("Error: The game world is empty!");
+		}
+		else if(itr.hasNext()) {
 		//first make sure the necessary elements exist
-		for(int i = 0; i < store.size(); i++) {
-			if(store.elementAt(i) instanceof PlayerShip) {
-				playerShip = true;
-				ps = (PlayerShip) store.elementAt(i);	
-			}
-			if(store.elementAt(i) instanceof NonPlayerShip) {
-				nonPlayerShip = true;
-				nps = (NonPlayerShip) store.elementAt(i);
-				
+			while(itr.hasNext()) {
+				GameObject obj = (GameObject) itr.getNext();
+				if(obj instanceof PlayerShip) {
+					playerShip = true;
+					ps = (PlayerShip) obj;	
+				}
+				if(obj instanceof NonPlayerShip) {
+					nonPlayerShip = true;
+					nps = (NonPlayerShip) obj;
+					
+				}
 			}
 		}
 		
@@ -701,13 +707,15 @@ public class GameWorld extends Observable implements IGameWorld {
 		if(playerShip && nonPlayerShip) {
 			this.setLives(this.getLives() - 1);
 			if(this.getLives() == 0) {
+				col.remove(nps);
+				col.remove(ps);
 				System.out.println("The player ship has collided with a non player ship!");
 				System.out.println("No Lives Left - Game Over");
 				this.gameOver();
 			}
 			else if(this.getLives() > 0) {
-				store.removeElement(nps);
-				store.removeElement(ps);
+				col.remove(nps);
+				col.remove(ps);
 				System.out.println("The player ship has collided with a non player ship!");
 				System.out.println("Lives Left = " + this.getLives());		
 			}
@@ -721,36 +729,39 @@ public class GameWorld extends Observable implements IGameWorld {
 	public void asteroidCollision() {
 		// This method is called when two asteroids collide
 		// They are to be mutually destroyed
-		if(store.size() == 0) {
-			System.out.println("Error: The game world is empty!");
-		}
-		
+		IIterator itr = col.getIterator();
 		int asteroids= 0;;
 		Asteroids ast1 = null;
 		Asteroids ast0 = null;
+		if(!itr.hasNext()) {
+			System.out.println("Error: The game world is empty!");
+		}
 		
+		else if(itr.hasNext()) {
 		//first make sure the necessary elements exist
-		for(int i = 0; i < store.size(); i++) {
-			if(store.elementAt(i) instanceof Asteroids) {
-				asteroids++;
-				if(asteroids == 1) {
-					ast0 = (Asteroids) store.elementAt(i);
-				}
-				else if(asteroids == 2) {
-					ast1 = (Asteroids) store.elementAt(i);
+			while(itr.hasNext()) {
+				GameObject obj = (GameObject) itr.getNext();
+				if(obj instanceof Asteroids) {
+					asteroids++;
+					if(asteroids == 1) {
+						ast0 = (Asteroids) obj;
+					}
+					else if(asteroids == 2) {
+						ast1 = (Asteroids) obj;
+					}
 				}
 			}
 		}
 		//There must be at least 2 asteroids for a collision to occur
-		if(asteroids == 0 && store.size() != 0) {
+		if(asteroids == 0) {
 			System.out.println("Error: There are no asteroids!");
 		}
 		else if(asteroids == 1) {
 			System.out.println("Error: There is only one asteroid!");
 		}
 		else if(asteroids >= 2) {
-			store.removeElement(ast0);
-			store.removeElement(ast1);
+			col.remove(ast0);
+			col.remove(ast1);
 			System.out.println("Astroid Collision!");
 		}
 		this.setChanged();
@@ -760,20 +771,24 @@ public class GameWorld extends Observable implements IGameWorld {
 		
 	public void turnPsLeft() {
 		// This method turns the player shift left (CCW) by a small amount
-		if(store.size() == 0) {
+		IIterator itr = col.getIterator();
+		boolean playerShip = false;
+		PlayerShip ps = null;
+		if(!itr.hasNext()) {
 			System.out.println("Error: The game world is empty!");
 		}
 		
-			boolean playerShip = false;
-			PlayerShip ps = null;
-			for(int i = 0; i < store.size(); i++) {
+		else if(itr.hasNext()) {
+			while(itr.hasNext()) {
 				//keep iterating until a player ship is found
-				if(store.elementAt(i) instanceof PlayerShip) {
+				GameObject obj = (GameObject) itr.getNext();
+				if(obj instanceof PlayerShip) {
 					playerShip = true;
-					ps = (PlayerShip) store.elementAt(i);
+					ps = (PlayerShip) obj;
 					
 				}
 			}
+		}
 			if(playerShip) {
 				ps.rotateLeft();
 				System.out.println("Turned Left!");
@@ -790,20 +805,25 @@ public class GameWorld extends Observable implements IGameWorld {
 	public void accelPsForward() {
 		// Accelerates the PS forward
 		// Cannot go faster than 20 units/second
-		if(store.size() == 0) {
+		IIterator itr = col.getIterator();
+		boolean playerShip = false;
+		PlayerShip ps = null;
+		
+		if(!itr.hasNext()) {
 			System.out.println("Error: The game world is empty!");
 		}
 		
-			boolean playerShip = false;
-			PlayerShip ps = null;
-			for(int i = 0; i < store.size(); i++) {
+		else if(itr.hasNext()) {
+			while(itr.hasNext()) {
 				//keep iterating until a player ship is found
-				if(store.elementAt(i) instanceof PlayerShip) {
+				GameObject obj = (GameObject) itr.getNext();
+				if(obj instanceof PlayerShip) {
 					playerShip = true;
-					ps = (PlayerShip) store.elementAt(i);
+					ps = (PlayerShip) obj;
 					
 				}
 			}
+		}
 			if(playerShip) {
 				if(ps.getSpeed() == 20) {
 					System.out.println("The ship can't go any faster!");
@@ -828,20 +848,24 @@ public class GameWorld extends Observable implements IGameWorld {
 	public void accelPsBackwards() {
 		// Accelerates the PS backwards
 		//cannot go in reverse
-		if(store.size() == 0) {
+		IIterator itr = col.getIterator();
+		boolean playerShip = false;
+		PlayerShip ps = null;
+		
+		if(!itr.hasNext()) {
 			System.out.println("Error: The game world is empty!");
 		}
-		
-			boolean playerShip = false;
-			PlayerShip ps = null;
-			for(int i = 0; i < store.size(); i++) {
+		else if(itr.hasNext()) {
+			while(itr.hasNext()) {
 				//keep iterating until a player ship is found
-				if(store.elementAt(i) instanceof PlayerShip) {
+				GameObject obj = (GameObject) itr.getNext();
+				if(obj instanceof PlayerShip) {
 					playerShip = true;
-					ps = (PlayerShip) store.elementAt(i);
+					ps = (PlayerShip) obj;
 					
 				}
 			}
+		}
 			if(playerShip) {
 				if(ps.getSpeed() == 0) {
 					System.out.println("The ship is stationary!");
@@ -871,20 +895,24 @@ public class GameWorld extends Observable implements IGameWorld {
 		boolean astr = false;
 		Asteroids asteroid = null;
 		NonPlayerShip nps = null;
-		if(store.size() == 0) {
+		IIterator itr = col.getIterator();
+		if(!itr.hasNext()) {
 			System.out.println("Error: The game world is empty!");
 		}
-		
-		for(int i = 0; i < store.size(); i++) {
-			if(store.elementAt(i) instanceof Asteroids) {
-				asteroid = (Asteroids) store.elementAt(i);
-				astr = true;
-			}
-			else if(store.elementAt(i) instanceof NonPlayerShip) {
-				nps = (NonPlayerShip) store.elementAt(i);
-				NPS = true;
+		else if(itr.hasNext()) {
+			while(itr.hasNext()) {
+				GameObject obj = (GameObject) itr.getNext();
+				if(obj instanceof Asteroids) {
+					asteroid = (Asteroids) obj;
+					astr = true;
+				}
+				else if(obj instanceof NonPlayerShip) {
+					nps = (NonPlayerShip) obj;
+					NPS = true;
+				}
 			}
 		}
+		
 		if(!NPS && !astr) {
 			System.out.println("Error: Please add Non Player Ship(s) and Asteroid(s)");
 		}
@@ -895,8 +923,8 @@ public class GameWorld extends Observable implements IGameWorld {
 			System.out.println("Error: Please add Asteroid(s)");
 		}
 		if(NPS && astr) {
-			store.removeElement(asteroid);
-			store.removeElement(nps);
+			col.remove(asteroid);
+			col.remove(nps);
 			System.out.println("An asteroid has collided with and destoryed a Non Player Ship!");
 		}
 
@@ -908,19 +936,23 @@ public class GameWorld extends Observable implements IGameWorld {
 
 	public void turnPsRight() {
 		// Turns the PS right
-		if(store.size() == 0) {
+		IIterator itr = col.getIterator();
+		boolean playerShip = false;
+		PlayerShip ps = null;
+		if(!itr.hasNext()) {
 			System.out.println("Error: The game world is empty!");
 		}
 		
-			boolean playerShip = false;
-			PlayerShip ps = null;
-			for(int i = 0; i < store.size(); i++) {
+		else if(itr.hasNext()) {
+			while(itr.hasNext()) {
 				//keep iterating until a player ship is found
-				if(store.elementAt(i) instanceof PlayerShip) {
+				GameObject obj = (GameObject) itr.getNext();
+				if(obj instanceof PlayerShip) {
 					playerShip = true;
-					ps = (PlayerShip) store.elementAt(i);
+					ps = (PlayerShip) obj;
 				}
 			}
+		}
 			if(playerShip) {
 				ps.rotateRight();
 				System.out.println("Turned Right!");
@@ -935,19 +967,24 @@ public class GameWorld extends Observable implements IGameWorld {
 	public void JumpThroughHyperspace() {
 		//"Jump through hyperspace"
 		//AKA reset the player ship to its starting location
-		if(store.size() == 0) {
+		IIterator itr = col.getIterator();
+		boolean playerShip = false;
+		PlayerShip ps = null;
+		
+		if(!itr.hasNext()) {
 			System.out.println("Error: The game world is empty!");
 		}
-			boolean playerShip = false;
-			PlayerShip ps = null;
-			for(int i = 0; i < store.size(); i++) {
+		else if(itr.hasNext()) {
+			while(itr.hasNext()) {
 				//keep iterating until a player ship is found
-				if(store.elementAt(i) instanceof PlayerShip) {
+				GameObject obj = (GameObject) itr.getNext();
+				if(obj instanceof PlayerShip) {
 					playerShip = true;
-					ps = (PlayerShip) store.elementAt(i);
+					ps = (PlayerShip) obj;
 					
 				}
 			}
+		}
 			if(playerShip) {
 				final Point2D home = new Point2D(512.0, 384.0);
 				ps.setLocation(home);
