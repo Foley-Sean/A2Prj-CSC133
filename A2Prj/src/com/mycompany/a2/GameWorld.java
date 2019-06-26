@@ -10,7 +10,8 @@ import com.codename1.ui.geom.Point2D;
 
 public class GameWorld extends Observable implements IGameWorld {
 	
-	public Vector<GameObject> store = new Vector<GameObject>();	//vector storing all game objects
+	//public Vector<GameObject> store = new Vector<GameObject>();	//vector storing all game objects
+	GameObjectCollection col = new GameObjectCollection();
 	private double length;
 	private double width;
 	private int numLives;
@@ -45,13 +46,15 @@ public class GameWorld extends Observable implements IGameWorld {
 		int speed = r.nextInt(highS-lowS) + lowS;
 		
 		Asteroids asteroid = new Asteroids(color,speed,dir);
-		store.add(asteroid);
+		//store.add(asteroid);
+		//iterator version
+		//add object to collection
+		col.add(asteroid);
+		
 		asteroid.toString();
 		
 		System.out.println(asteroid);
 		
-		//TestCode
-		//remove and add to proxy game world after this delivery
 		this.setChanged();
 		this.notifyObservers(new GameWorldProxy(this));
 		
@@ -70,13 +73,13 @@ public class GameWorld extends Observable implements IGameWorld {
 		int speed = r.nextInt(highS-lowS) + lowS;
 		
 		NonPlayerShip NPS = new NonPlayerShip(color, speed, dir);
-		store.add(NPS);
-		NPS.toString();
+		//store.add(NPS);
+		//iterator version
+		col.add(NPS);
 		
+		NPS.toString();
 		System.out.println(NPS);
 		
-		//TestCode
-		//remove and add to proxy game world after this delivery
 		this.setChanged();
 		this.notifyObservers(new GameWorldProxy(this));
 		
@@ -88,13 +91,13 @@ public class GameWorld extends Observable implements IGameWorld {
 		int color = ColorUtil.WHITE;
 		
 		SpaceStation BSS = new SpaceStation(color);
-		store.add(BSS);
-		BSS.toString();
+		//store.add(BSS);
+		//iterator version
+		col.add(BSS);
 		
+		BSS.toString();
 		System.out.println(BSS);
 		
-		//TestCode
-		//remove and add to proxy game world after this delivery
 		this.setChanged();
 		this.notifyObservers(new GameWorldProxy(this));
 		
@@ -106,17 +109,29 @@ public class GameWorld extends Observable implements IGameWorld {
 		int dir = 0;
 		int speed = 0;
 		boolean ship = false;
+		/*
 		for(int i = 0; i < store.size(); i++) {
 			if(store.elementAt(i) instanceof PlayerShip) {
 				ship = true;
 			}
+		}//end loop
+		*/
+		//iterator loop
+		IIterator itr = col.getIterator();
+		while(itr.hasNext()) {
+			if(itr.getNext() instanceof PlayerShip) {
+				ship = true;
+			}
 		}
+		
 		if(ship == true) {
 			System.out.println("Error: Only one player ship allowed at a time!");
 		}
 		else if(ship == false) {
 		PlayerShip PS = new PlayerShip(color, speed, dir);
-		store.add(PS);
+		//store.add(PS);
+		//iterator add
+		col.add(PS);
 		PS.toString();
 		
 		System.out.println(PS);
@@ -131,11 +146,13 @@ public class GameWorld extends Observable implements IGameWorld {
 		// Fire a missile from the player ship
 		//use getters and setters to determine misslecount 
 		boolean playerShip = false;
-		for(int i = 0; i < store.size() && !playerShip; i++) {
+		//refactor for iterator
+		IIterator itr = col.getIterator();
+		while(itr.hasNext() && !playerShip) {
 			//keep iterating until a player ship is found
-			
-			if(store.elementAt(i) instanceof PlayerShip) {
-				PlayerShip ps = (PlayerShip) store.elementAt(i);
+			GameObject myObj = (GameObject) itr.getNext();
+			if(myObj instanceof PlayerShip) {
+				PlayerShip ps = (PlayerShip) myObj;
 				SteerableMissileLauncher MML = ps.getMissleLauncher();
 				playerShip = true;
 				if(ps.getMissileCount() > 0) {
@@ -143,7 +160,7 @@ public class GameWorld extends Observable implements IGameWorld {
 					ps.setMissileCount(ps.getMissileCount() - 1);
 					this.setMissileCount(this.getMissileCount() - 1);
 					Missile msl = new Missile(ps.getLoc(), MML.getDirection(), ps.getSpeed(), ps.getColor(), ps.getShip());
-					store.add(msl);
+					col.add(msl);
 					System.out.println("PLAYERSHIP has fired a missile!");
 					
 					msl.toString();
@@ -168,16 +185,17 @@ public class GameWorld extends Observable implements IGameWorld {
 	public void fireNpsMissile() {
 		// Fire a missile from the nps
 		boolean nonPlayerShip = false;
-		for(int i = 0; i < store.size() && !nonPlayerShip; i++) {
+		IIterator itr = col.getIterator();
+		while(itr.hasNext() && !nonPlayerShip) {
 			//iterate until nps is found
-			if(store.elementAt(i) instanceof NonPlayerShip) {
-				NonPlayerShip nps = (NonPlayerShip) store.elementAt(i);
+			GameObject myObj = (GameObject) itr.getNext();
+			if(myObj instanceof NonPlayerShip) {
+				NonPlayerShip nps = (NonPlayerShip) myObj;
 				nonPlayerShip = true;
 				if(nps.getMissileCount() > 0) {
 					nps.setMissileCount(nps.getMissileCount() - 1);
 					Missile msl = new Missile(nps.getLoc(), nps.getDirection(), nps.getSpeed(), nps.getColor(), nps.getShip());
-					//need to add target (coords of PS)
-					store.add(msl);
+					col.add(msl);
 					System.out.println("NONPLAYERSHIP has fired a missile!");
 					msl.toString();
 					System.out.println(msl);
@@ -198,34 +216,37 @@ public class GameWorld extends Observable implements IGameWorld {
 
 	public void map() {
 		// This function displays all of the information of all of the current GameWorld objects
+
+		//iterator version
+		IIterator itr = col.getIterator();
 		System.out.println("*****Printing game world state*****");
-		for(int i = 0; i < store.size() && store.size() != 0; i++) {
-			//loop through the game world if it isn't empty
-			GameObject mobj = store.elementAt(i);
-			
+		while(itr.hasNext()) {
+			GameObject mobj = (GameObject) itr.getNext();
 			System.out.println(mobj);
 			
 		}
 		
 	}
-
+	//Print is no longer used and has bugs
+	/*
 	public void print() {
 		// Generates info about the game world (score etc.)
 		int mag = 0;
 		System.out.println("*****Printing game state values*****");
 		System.out.println("Score = " + this.getScore());
 		//get current missile count
+		IIterator itr = col.getIterator();
 		boolean playerShip = false;
-		for(int i = 0; i < store.size() && !playerShip; i++) {
+		while(itr.hasNext() && !playerShip) {
 			//keep iterating until a player ship is found
-			if(store.elementAt(i) instanceof PlayerShip) {
-				PlayerShip ps = (PlayerShip) store.elementAt(i);
+			if(itr.getNext() instanceof PlayerShip) {
+				PlayerShip ps = (PlayerShip) itr.getNext();
 				playerShip = true;
 				mag = ps.getMissileCount();
 				
 				System.out.println("Number of Player Missiles = " + mag);
 			}
-		}
+		}//end for 
 		if(playerShip == false) {
 			System.out.println("Number of Player Missiles: No Player Ship");
 		}
@@ -233,23 +254,30 @@ public class GameWorld extends Observable implements IGameWorld {
 		System.out.println("Elapsed Time = " + this.getTime());
 		System.out.println("Number of Lives = " + this.getLives());
 		
-	}
+	}*/
 	
 	public void tick() {
 		this.setTime(1) ;
-		MoveableGameObject myObj = null;
+		GameObject myObj = null;
 		SpaceStation myStation = null;
+		MoveableGameObject myMovObj = null;
+		Missile msl = null;
 		boolean obj = false;
-		boolean ISS = false;
+		boolean iSS = false;
 		boolean beacon = false;
-		for(int i = 0; i < store.size(); i++) {
-			if(store.elementAt(i) instanceof SpaceStation) {
-				myStation = (SpaceStation) store.elementAt(i);
-				ISS = true;
+		boolean missile = false;
+		IIterator itr = col.getIterator();
+		while(itr.hasNext()) {
+			myObj = (GameObject) itr.getNext();
+			
+			if(myObj instanceof SpaceStation) {
+				myStation = (SpaceStation) myObj;
+				iSS = true;
 				if(myStation.getBlinkRate() == 0) {
 					//doesn't ever blink or doesn't ever shine?
 					myStation.setLight(myStation.getLight());
 				}
+				
 				else if(this.getTime() % myStation.getBlinkRate() == 0) {
 					//light is on
 					//check status of light
@@ -263,60 +291,50 @@ public class GameWorld extends Observable implements IGameWorld {
 					}
 				}
 				
-			}
-			if(store.elementAt(i) instanceof MoveableGameObject) {
-				myObj = (MoveableGameObject) store.elementAt(i);
+			}//end if spacestation
+			
+			if(myObj instanceof MoveableGameObject) {
+				myMovObj = (MoveableGameObject) myObj;
 				obj = true;
-				myObj.move();
-				if(store.elementAt(i) instanceof Missile) {
-					Missile msl = (Missile) store.elementAt(i);
+				myMovObj.move();
+				if(myMovObj instanceof Missile) {
+					missile = true;
+					msl = (Missile) myMovObj;
 					msl.decFuel();
-					if(msl.getFuel() <= 0) {
-						store.removeElement(msl);
-						if(msl.getShip() instanceof PlayerShip) {
-							System.out.println("A missile fired from a Player Ship has ran out of fuel!");
-						}
-						else if(msl.getShip() instanceof NonPlayerShip) {
-							System.out.println("A Missile fired from a non Player Ship has ran out of fuel!");
-						}
-					}
-					
 				}
 			}
 		}
-		if(store.size() == 0) {
-			System.out.println("Time has passed.");
+		if(!obj && !iSS) {
+			System.out.println("Time has passed, nothing has changed.");
 		}
-		else {
-			if(obj) {
-				System.out.println("Moveable objects have moved.");
-				if(ISS) {
-					if(myStation.getLight()) {
-						System.out.println("The Space Staion light is on!");
-					}
-					else if(!myStation.getLight()) {
-						System.out.println("The Space Station light is off!");
-					}
-				
-				}
-			}
-			else if(!obj) {
-				if(ISS) {
-					if(myStation.getLight()) {
-						System.out.println("The Space Staion light is on!");
-					}
-					else if(!myStation.getLight()) {
-						System.out.println("The Space Station light is off!");
-					}
-				
-				}
-			}
+		if(obj) {
+			System.out.println("Moveable objects have moved.");
 		}
-		
+		if(iSS) {
+			if(myStation.getLight()) {
+					System.out.println("The Space Staion light is on!");
+				}
+				else if(!myStation.getLight()) {
+					System.out.println("The Space Station light is off!");
+				}
+		}
+		if(missile) {
+				if(msl.getFuel() <= 0) {
+					if(msl.getShip() instanceof PlayerShip) {
+						System.out.println("A missile fired from a Player Ship has ran out of fuel!");
+						col.remove(msl);
+					}
+					else if(msl.getShip() instanceof NonPlayerShip) {
+						System.out.println("A Missile fired from a non Player Ship has ran out of fuel!");
+						col.remove(msl);
+					}
+				}
+		}
+
 		this.setChanged();
 		this.notifyObservers(new GameWorldProxy(this));
 		
- }
+ }//end class
 
 	//delivery 3
 	
@@ -324,10 +342,12 @@ public class GameWorld extends Observable implements IGameWorld {
 		// Rotate the PS's moveable (steerable) missile launcher CCW by a small amount
 		boolean playerShip = false;
 		PlayerShip ps = null;
-		for(int i = 0; i < store.size() && !playerShip; i++) {
+		IIterator itr = col.getIterator();
+		while(itr.hasNext() && !playerShip) {
 			//keep iterating until a player ship is found
-			if(store.elementAt(i) instanceof PlayerShip) {
-				ps = (PlayerShip) store.elementAt(i);
+			GameObject obj = (GameObject) itr.getNext();
+			if(obj instanceof PlayerShip) {
+				ps = (PlayerShip) obj;
 				playerShip = true;
 			}
 		}
@@ -353,10 +373,12 @@ public class GameWorld extends Observable implements IGameWorld {
 		// Rotate the PS's moveable (steerable) missile launcher CCW by a small amount
 		boolean playerShip = false;
 		PlayerShip ps = null;
-		for(int i = 0; i < store.size() && !playerShip; i++) {
+		IIterator itr = col.getIterator();
+		while(itr.hasNext() && !playerShip) {
 			//keep iterating until a player ship is found
-			if(store.elementAt(i) instanceof PlayerShip) {
-				ps = (PlayerShip) store.elementAt(i);
+			GameObject obj = (GameObject) itr.getNext();
+			if(obj instanceof PlayerShip) {
+				ps = (PlayerShip) obj;
 				playerShip = true;
 			}
 			
@@ -381,10 +403,12 @@ public class GameWorld extends Observable implements IGameWorld {
 		// cannot reload missiles if the ship already has max number
 		boolean playerShip = false;
 		PlayerShip ps = null;
-		for(int i = 0; i < store.size() && !playerShip; i++) {
+		IIterator itr = col.getIterator();
+		while(itr.hasNext()&& !playerShip) {
 			//keep iterating until a player ship is found
-			if(store.elementAt(i) instanceof PlayerShip) {
-				ps = (PlayerShip) store.elementAt(i);
+			GameObject obj = (GameObject) itr.getNext();
+			if(obj instanceof PlayerShip) {
+				ps = (PlayerShip) obj;
 				playerShip = true;
 			}	
 		}
@@ -400,6 +424,9 @@ public class GameWorld extends Observable implements IGameWorld {
 				ps.setMissileCount(10);
 				this.setMissileCount(10);
 			}
+			if(mag >= 10) {
+				System.out.println("Already at max missiles!");
+			}
 			
 		}
 		
@@ -412,44 +439,53 @@ public class GameWorld extends Observable implements IGameWorld {
 		// This method is called to simulate a player ship striking and destroying an asteroid
 		// score should be updated if an asteroid is killed
 		// first check the game world
-		if(store.size() == 0) {
+		IIterator itr = col.getIterator();
+		if(!itr.hasNext()) {
 			System.out.println("Error: The game world is empty!");
 		}
-		
+		else if(itr.hasNext()) {
 			boolean playerShip = false;
 			boolean asteroid = false;
-			PlayerShip ps = null;
-			for(int i = 0; i < store.size(); i++) {
+			boolean psMissile = false;
+			Missile msl = null;
+			Asteroids ast = null;
+			while(itr.hasNext()) {
 				//keep iterating until a player ship is found
-				if(store.elementAt(i) instanceof PlayerShip) {
+				GameObject obj = (GameObject) itr.getNext();
+				if(obj instanceof PlayerShip) {
 					playerShip = true;
-					ps = (PlayerShip) store.elementAt(i);
+				}
+				if(obj instanceof Asteroids) {				
+					asteroid = true;
+					ast = (Asteroids) obj;
 					
 				}
-				if(store.elementAt(i) instanceof Asteroids) {				
-					asteroid = true;
+				if(obj instanceof Missile) {
+					msl = (Missile) obj;
+					if(msl.getShip() instanceof PlayerShip) {
+						psMissile = true;
+					}
 				}
-			}
+			}//end loop
 			if(!playerShip) {
 				System.out.println("Error: Please add player ship first!");
 			}
 			if(!asteroid) {
 				System.out.println("Error: Please add asteroid first!");
 			}
-			
-			if(playerShip && asteroid) {
-				//flag for asteroid found
-				boolean flag = false;
-				for(int i = 0; i < store.size() && !flag; i++) {
-					if(store.elementAt(i) instanceof Asteroids) {
-						store.removeElementAt(i);
-						this.setScore(this.getScore() + 10);
-						ps.decMissileCount();
-						flag = true;
-					}
-				}
-				System.out.println("Asteroid destroyed!");
+			if(!psMissile) {
+				System.out.println("Error: No player missiles!");
 			}
+			
+			if(playerShip && asteroid && psMissile) {
+				col.remove(ast);
+				col.remove(msl);
+				System.out.println("Asteroid destroyed!");
+				this.setScore(this.getScore() + 10);
+			}
+				
+			
+	}//end else if
 
 			this.setChanged();
 			this.notifyObservers(new GameWorldProxy(this));
@@ -458,43 +494,35 @@ public class GameWorld extends Observable implements IGameWorld {
 	public void npsShotDown() {
 		// A player ship as destroyed a non player ship with a missile
 		// Need to add check for player ship missile
-		
-		if(store.size() == 0) {
+		IIterator itr = col.getIterator();
+		if(!itr.hasNext()) {
 			System.out.println("Error: The game world is empty!");
 		}
-		else if(store.size() != 0) {
+		else if(itr.hasNext()) {
 			boolean playerShip = false;
 			boolean nonPlayerShip = false;
-			boolean flag = false;
 			boolean missile = false;
-			PlayerShip ps = null;
 			NonPlayerShip nps = null;
-		
-			//again this loop , need to create helper function for readability
-			for(int i = 0; i < store.size() && !flag; i++) {
-				if(store.elementAt(i) instanceof PlayerShip) {
+			Missile msl = null;
+	
+			while(itr.hasNext()) {
+				GameObject obj = (GameObject) itr.getNext();
+				if(obj instanceof PlayerShip) {
 					playerShip = true;
-					ps = (PlayerShip) store.elementAt(i);
 				}
-				if(store.elementAt(i) instanceof NonPlayerShip) {
+				if(obj instanceof NonPlayerShip) {
 					nonPlayerShip = true;
-					nps = (NonPlayerShip) store.elementAt(i);
+					nps = (NonPlayerShip) obj;
 				}
-				//Flawed Logic, can still get shot down if there is no nonPlayerShip
 				//will update when "closeness" matters
-				if(store.elementAt(i) instanceof Missile && playerShip && nonPlayerShip) {
-					Missile msl = (Missile) store.elementAt(i);
+				if(obj instanceof Missile) {
+					msl = (Missile) obj;
 					Ship ship = msl.getShip();
 						if(ship instanceof PlayerShip) {
 							missile = true;
-							store.removeElementAt(i);
-							store.removeElement(nps);	
-						}
-						else {
-							missile = false;
 						}
 				}
-			}//end loop
+			}//end while
 			
 		if(!playerShip) {
 			System.out.println("Error: Add player ship!");
@@ -507,6 +535,8 @@ public class GameWorld extends Observable implements IGameWorld {
 		}
 		else if(playerShip && nonPlayerShip && missile) {
 			System.out.println("Player has eliminated nps!");
+			col.remove(nps);
+			col.remove(msl);
 			this.setScore(this.getScore() + 20); 
 		}
 		
@@ -520,57 +550,63 @@ public class GameWorld extends Observable implements IGameWorld {
 	public void psShotDown() {
 		// A non player ship as struck and shot down a player ship with a missile
 		//Need to bug check this
-		if(store.size() == 0) {
+		IIterator itr = col.getIterator();
+		if(!itr.hasNext()) {
 			System.out.println("Error: The game world is empty!");
 		}
+		
+		else if(itr.hasNext()) {
 		boolean playerShip = false;
 		boolean missile = false;
-		
 		PlayerShip ps = null;
-		NonPlayerShip nps = null;
+		Missile msl = null;
 		//first make sure the necessary elements exist
-		for(int i = 0; i < store.size(); i++) {
-			if(store.elementAt(i) instanceof PlayerShip) {
+		while(itr.hasNext()) {
+			GameObject obj = (GameObject) itr.getNext();
+			if(obj instanceof PlayerShip) {
 				playerShip = true;
-				ps = (PlayerShip) store.elementAt(i);
-					
+				ps = (PlayerShip) obj;
 			}
 			
-			if(store.elementAt(i) instanceof Missile && playerShip) {
-				Missile msl = (Missile) store.elementAt(i);
+			if(obj instanceof Missile) {
+				msl = (Missile) obj;
 				Ship ship = msl.getShip();
 				if(ship instanceof NonPlayerShip) {
-					missile = true;
-					store.removeElementAt(i);
-					store.removeElement(ps);	
+					missile = true;	
 				}
-				else {
-					missile = false;
-				}
+				
 			}
 		}
+	
 		// Situations where an nps can kill a ps
-		if(!playerShip) {
-			System.out.println("Error: Add player ship!");
-		}
-		if(!missile) {
-			System.out.println("Error: There are no non player missiles");
+		// note that an NPS need not be found, only a NPS missile
+			if(!playerShip) {
+				System.out.println("Error: Add player ship!");
+			}
+			if(!missile) {
+				System.out.println("Error: There are no non player missiles");
 			}
 		
-		else if(playerShip && missile) {
-			this.setLives(this.getLives() - 1);
-			if(this.getLives() == 0) {
-				System.out.println("No lives left - Game Over!");
-				this.gameOver();
+			else if(playerShip && missile) {
+				col.remove(msl);
+				col.remove(ps);
+				this.setLives(this.getLives() - 1);
+					if(this.getLives() == 0) {
+						System.out.println("No lives left - Game Over!");
+						this.gameOver();
+					}
+					else if(this.getLives() > 0) {
+						col.remove(msl);
+						col.remove(ps);
+						System.out.println("Player Ship Eliminated!");
+						System.out.println("Lives = " + this.getLives());
+					}
 			}
-			else if(this.getLives() > 0) {
-				System.out.println("Player Ship Eliminated!");
-				System.out.println("Lives = " + this.getLives());
-			}
-		}
 
-		this.setChanged();
-		this.notifyObservers(new GameWorldProxy(this));
+			this.setChanged();
+			this.notifyObservers(new GameWorldProxy(this));
+			
+			}
 	}
 
 	public void psCrashIntoAsteroid() {

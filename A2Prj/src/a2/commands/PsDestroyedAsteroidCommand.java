@@ -14,7 +14,7 @@ private GameWorld gw;
 	
 	@Override 
 	public void actionPerformed(ActionEvent e) {
-		gw.fireNpsMissile();
+		gw.asteroidKilled();
 		//System.out.println("PS Killed Asteroid");
 	}
 }

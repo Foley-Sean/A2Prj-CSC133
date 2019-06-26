@@ -53,6 +53,7 @@ public class GameObjectCollection implements ICollection {
 			return(objectCollection.elementAt(elementIndex));
 		}
 		
+		
 	}
 	
 }
