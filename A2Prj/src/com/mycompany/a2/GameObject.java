@@ -12,16 +12,18 @@ public abstract class GameObject {
 	private Point2D location;
 	private int color;
 	private Random random = new Random();
+	//this is ugly
+	GameWorld gw = new GameWorld();
 	private final double MIN_X_Y = 0.0;
-	private double MAX_X = 1024.0;
-	private double MAX_Y = 768.0;
+	private double MAX_X = gw.getWidth();
+	private double MAX_Y = gw.getLength();
 	
 	public GameObject(int color) {
 		
 		this.color = color;
 		if(color == ColorUtil.LTGRAY) {
 			
-			this.setLocation(new Point2D(512, 384));
+			this.setLocation(new Point2D(MAX_X/2, MAX_Y/2));
 		}
 		else
 		this.setLocation(new Point2D(Math.round(random.nextFloat() * (MAX_X - MIN_X_Y)  + MIN_X_Y), Math.round(random.nextFloat() * (MAX_Y - MIN_X_Y) + MIN_X_Y)));

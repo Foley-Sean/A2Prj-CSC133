@@ -12,8 +12,8 @@ public class GameWorld extends Observable implements IGameWorld {
 	
 	//public Vector<GameObject> store = new Vector<GameObject>();	//vector storing all game objects
 	private GameObjectCollection col = new GameObjectCollection();
-	private double length;
-	private double width;
+	private static double length;
+	private static double width;
 	private int numLives;
 	private int missileCount;
 	private boolean Sound;
@@ -24,8 +24,8 @@ public class GameWorld extends Observable implements IGameWorld {
 	private static Sounds gameOver;
 	
 	public void init() {
-		this.setLength(768);
-		this.setWidth(1024);
+		//this.setLength(768);
+		//this.setWidth(1024);
 		this.setLives(3);
 		this.setMissileCount(10);
 		this.setScore(0);
@@ -34,7 +34,7 @@ public class GameWorld extends Observable implements IGameWorld {
 		
 		fireMissile = new Sounds("96692__cgeffex__asteroids-ship-fire.wav");
 		rotateLauncher = new Sounds("23216__noizemaker__nzp-bmw-1150gs-fuel-pump.wav");
-		gameOver = new Sounds("321910__bboyjoe-15__you-lose.mp3");
+		gameOver = new Sounds("382310__myfox14__game-over-arcade.wav");
 	}
 
 	public void addAsteroid() {
@@ -1005,7 +1005,9 @@ public class GameWorld extends Observable implements IGameWorld {
 			}
 		}
 			if(playerShip) {
-				final Point2D home = new Point2D(512.0, 384.0);
+				double x = GameWorld.width/2;
+				double y = GameWorld.length/2;
+				final Point2D home = new Point2D(x, y);
 				ps.setLocation(home);
 				ps.setSpeed(0);
 				ps.setDirection(-90);

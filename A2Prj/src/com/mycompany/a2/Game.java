@@ -76,6 +76,9 @@ public class Game extends Form implements Runnable {
 			
 		this.show();
 		
+		//set dimensions
+		gw.setLength(mv.getParent().getY()+ mv.getHeight());
+		gw.setWidth(mv.getParent().getX()+ mv.getWidth());
 		UITimer timer = new UITimer(this);
 		timer.schedule(20, true, this);
 		
