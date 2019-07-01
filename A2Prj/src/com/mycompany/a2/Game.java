@@ -72,10 +72,10 @@ public class Game extends Form implements Runnable {
 		//sounds start
 		bgsound = new BGSounds("Half Step Tripple Threat - no drums.mp3");
 		//fireMissile = new Sounds("96692__cgeffex__asteroids-ship-fire.wav");
-		bgsound.run();
+		//bgsound.run();
 			
 		this.show();
-		
+		bgsound.run();
 		//set dimensions
 		gw.setLength(mv.getParent().getY()+ mv.getHeight());
 		gw.setWidth(mv.getParent().getX()+ mv.getWidth());
