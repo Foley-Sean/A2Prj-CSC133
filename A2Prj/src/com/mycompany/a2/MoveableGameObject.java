@@ -32,16 +32,29 @@ public abstract class MoveableGameObject extends GameObject implements IMoveable
 	}
 	
 	public void move() {
-		final Point2D newLocation;
-		final Point2D oldLocation = this.getLoc();
+		Point2D newLocation;
+	    Point2D oldLocation = this.getLoc();
 		double oldX = oldLocation.getX();
 		double oldY = oldLocation.getY();
+		double newX;
+		double newY;
 		
 		double deltaX = Math.cos(Math.toRadians(this.getDirection())) * this.getSpeed();
 		double deltaY = Math.sin(Math.toRadians(this.getDirection())) * this.getSpeed();
 		
 		newLocation = new Point2D(Math.round(oldX + deltaX), Math.round(oldY + deltaY));
+	
 		this.setLocation(newLocation);
+		if(this.getLocation().getX() >= gw.getWidth()){
+			newX = 0.0;
+			newLocation = new Point2D(newX, this.getLocation().getY());
+			this.setLocation(newLocation);
+		}
+		if(this.getLocation().getY() >= gw.getLength()) {
+			newY = 0.0;
+			newLocation = new Point2D(this.getLocation().getX(), newY);
+			this.setLocation(newLocation);
+		}
 		
 	}
 	
