@@ -8,6 +8,7 @@ import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.plaf.Border;
+import com.codename1.ui.util.UITimer;
 
 import a2.commands.AboutCommand;
 import a2.commands.AddAsteroidCommand;
@@ -47,7 +48,7 @@ import com.codename1.ui.Toolbar;
 import com.codename1.ui.events.ActionEvent; 
 import java.lang.String;
 
-public class Game extends Form {
+public class Game extends Form implements Runnable {
 	
 	private GameWorld gw;
 	private static BGSounds bgsound;
@@ -72,6 +73,10 @@ public class Game extends Form {
 		bgsound.run();
 		
 		this.show();
+		
+		UITimer timer = new UITimer(this);
+		timer.schedule(20, true, this);
+		
 	
 	}
 	//test to return sound object
@@ -455,6 +460,11 @@ public class Game extends Form {
 			
 		}
 		);
+	}
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		gw.tick();
 	}
 		
 }//game

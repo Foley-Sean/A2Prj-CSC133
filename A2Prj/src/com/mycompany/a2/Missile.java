@@ -1,8 +1,10 @@
 package com.mycompany.a2;
 
+import com.codename1.ui.Graphics;
+import com.codename1.ui.geom.Point;
 import com.codename1.ui.geom.Point2D;
 
-public class Missile extends MoveableGameObject {
+public class Missile extends MoveableGameObject implements IDrawable {
 	private int fuelLevel;
 	private boolean source;
 	private Ship ps;
@@ -70,6 +72,13 @@ public class Missile extends MoveableGameObject {
 		test = test.getShip();
 		
 		return test;
+	}
+
+	@Override
+	public void draw(Graphics g, Point pCmpRelPrnt) {
+		// TODO Auto-generated method stub
+		g.setColor(this.getColor());
+		g.drawRect((int)this.getLocation().getX(), (int)this.getLocation().getY(), 10, 20);
 	}
 		
 	

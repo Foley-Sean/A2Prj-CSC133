@@ -1,8 +1,10 @@
 package com.mycompany.a2;
 
+import com.codename1.ui.Graphics;
+import com.codename1.ui.geom.Point;
 import com.codename1.ui.geom.Point2D;
 
-public class SteerableMissileLauncher extends MissileLauncher implements ISteerable {
+public class SteerableMissileLauncher extends MissileLauncher implements ISteerable, IDrawable {
 	//need to implement a way to change direction
 	
 	public SteerableMissileLauncher(Point2D point2d, int color, int speed, int dir) {
@@ -42,6 +44,14 @@ public class SteerableMissileLauncher extends MissileLauncher implements ISteera
 		
 		return myDesc;
 		
+	}
+
+
+	@Override
+	public void draw(Graphics g, Point pCmpRelPrnt) {
+		// TODO Auto-generated method stub
+		g.setColor(this.getColor());
+		g.drawRect((int)this.getLocation().getX(), (int)this.getLocation().getY(), 11, 40);
 	}
 	
 	
