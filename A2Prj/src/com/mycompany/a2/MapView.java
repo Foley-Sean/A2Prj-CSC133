@@ -3,12 +3,37 @@ import java.util.Observable;
 import java.util.Observer;
 
 import com.codename1.ui.Container;
+import com.codename1.ui.Graphics;
+import com.codename1.ui.geom.Point;
+import com.codename1.ui.geom.Point2D;
 
 public class MapView extends Container implements Observer {
-
+	Point loc = new Point(getX(), getY());
+	//Point2D pCmpRelScrn = new Point2D(getAbsoluteX(), getAbsoluteY());
+	IGameWorld gw;
+	GameObjectCollection gc;
+	IIterator itr;
+	public MapView(GameWorld gw2) {
+		gw = gw2;
+		gc = gw2.getWorld();
+		itr = gc.getIterator();
+	}
 	@Override
 	public void update(Observable observable, Object data) {
-		// TODO Auto-generated method stub
+		// calls repaint when invoked to draw game world objects
+		gw = (IGameWorld) data;
+		itr = gw.getIterator();
+		this.repaint();	
+	}
+	
+	@Override
+	public void paint(Graphics g) {
+		while(itr.hasNext()) {
+			GameObject obj = (GameObject)itr.getNext();
+			if(obj instanceof IDrawable) {
+				((IDrawable) obj).draw(g, loc);
+			}
+		}
 		
 	}
 

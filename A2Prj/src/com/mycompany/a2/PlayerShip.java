@@ -1,6 +1,9 @@
 package com.mycompany.a2;
 
-public class PlayerShip extends Ship implements ISteerable {
+import com.codename1.ui.Graphics;
+import com.codename1.ui.geom.Point;
+
+public class PlayerShip extends Ship implements ISteerable, IDrawable {
 
 	private SteerableMissileLauncher MML;
 	
@@ -48,7 +51,14 @@ public class PlayerShip extends Ship implements ISteerable {
 		this.setDirection(this.getDirection() - 10);
 		
 		
-		
+	}
+
+	@Override
+	public void draw(Graphics g, Point pCmpRelPrnt) {
+		// Handles drawing of the component
+		g.setColor(this.getColor());
+		g.drawLine((int)pCmpRelPrnt.getX(), (int)pCmpRelPrnt.getY(), (int)pCmpRelPrnt.getX() + 200, (int) pCmpRelPrnt.getY() + 200);
+		g.drawRect((int)this.getLocation().getX(), (int) this.getLocation().getY(), 20, 20);
 	}
 	
 	

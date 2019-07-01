@@ -1,6 +1,8 @@
 package com.mycompany.a2;
 import  java.util.Random;
 
+import com.codename1.ui.geom.Point2D;
+
 public abstract class Ship extends MoveableGameObject {
 
 	private int missileCount;
@@ -63,6 +65,10 @@ public abstract class Ship extends MoveableGameObject {
 	public Ship getShip() {
 			return this;
 	}
+	
+	//public Point2D getLocation() {
+		
+	//}
 	
 	public String toString() {
 		

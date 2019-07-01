@@ -11,7 +11,7 @@ import com.codename1.ui.geom.Point2D;
 public class GameWorld extends Observable implements IGameWorld {
 	
 	//public Vector<GameObject> store = new Vector<GameObject>();	//vector storing all game objects
-	GameObjectCollection col = new GameObjectCollection();
+	private GameObjectCollection col = new GameObjectCollection();
 	private double length;
 	private double width;
 	private int numLives;
@@ -109,14 +109,6 @@ public class GameWorld extends Observable implements IGameWorld {
 		int dir = 0;
 		int speed = 0;
 		boolean ship = false;
-		/*
-		for(int i = 0; i < store.size(); i++) {
-			if(store.elementAt(i) instanceof PlayerShip) {
-				ship = true;
-			}
-		}//end loop
-		*/
-		//iterator loop
 		IIterator itr = col.getIterator();
 		while(itr.hasNext()) {
 			if(itr.getNext() instanceof PlayerShip) {
@@ -1053,6 +1045,11 @@ public class GameWorld extends Observable implements IGameWorld {
 		return "Off";
 	}
 	
+	//getter for the world itself
+	public GameObjectCollection getWorld() {
+		return this.col;
+	}
+	
 	public int getLives() { 
 		return this.numLives;
 
@@ -1068,6 +1065,10 @@ public class GameWorld extends Observable implements IGameWorld {
 	
 	public int getScore() {
 		return this.score;
+	}
+	
+	public IIterator getIterator() {
+		return this.col.getIterator();
 	}
 	
 	

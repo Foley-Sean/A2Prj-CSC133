@@ -50,11 +50,11 @@ import java.lang.String;
 public class Game extends Form {
 	
 	private GameWorld gw;
-	
+	private static BGSounds bgsound;
 	public Game() {
 		gw = new GameWorld();
 		
-		MapView mv = new MapView();
+		MapView mv = new MapView(gw);
 		PointsView pv = new PointsView();
 		gw.addObserver(mv);
 		gw.addObserver(pv);
@@ -66,12 +66,18 @@ public class Game extends Form {
 		add(BorderLayout.NORTH, pv);
 		pv.getStyle().setBorder(Border.createLineBorder(3, ColorUtil.BLACK));
 		add(BorderLayout.CENTER, mv);
-		mv.getStyle().setBorder(Border.createLineBorder(3, ColorUtil.BLACK));
+		mv.getStyle().setBorder(Border.createLineBorder(3, ColorUtil.MAGENTA));
+		//sound start
+		bgsound = new BGSounds("Half Step Tripple Threat - no drums.mp3");
+		bgsound.run();
 		
 		this.show();
 	
 	}
-	
+	//test to return sound object
+	public static BGSounds getAudio() {
+		return bgsound;
+	}
 
 	private void createSideMenu() {
 		// Create Side Menu and add items to it

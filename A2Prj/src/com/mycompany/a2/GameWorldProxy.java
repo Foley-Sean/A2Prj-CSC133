@@ -59,6 +59,11 @@ public class GameWorldProxy extends Observable implements IGameWorld {
 	
 		return gw.getLength();
 	}
+	
+	@Override
+	public IIterator getIterator() {
+		return gw.getIterator();
+	}
 
 	
 }

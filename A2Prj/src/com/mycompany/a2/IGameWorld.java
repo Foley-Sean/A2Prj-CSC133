@@ -11,5 +11,5 @@ public interface IGameWorld {
 	int getMissileCount();
 	double getWidth();
 	double getLength();
-	
+	IIterator getIterator();
 }
