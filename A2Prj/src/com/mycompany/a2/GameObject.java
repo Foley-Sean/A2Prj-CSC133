@@ -18,7 +18,8 @@ public abstract class GameObject {
 	public GameObject(int color) {
 		this.color = color;
 		if(color == ColorUtil.LTGRAY) {
-			this.setLocation(new Point2D(512.0, 384.0));
+			
+			this.setLocation(new Point2D(512, 384));
 		}
 		else
 		this.setLocation(new Point2D(Math.round(random.nextFloat() * (MAX_X - MIN_X_Y)  + MIN_X_Y), Math.round(random.nextFloat() * (MAX_Y - MIN_X_Y) + MIN_X_Y)));

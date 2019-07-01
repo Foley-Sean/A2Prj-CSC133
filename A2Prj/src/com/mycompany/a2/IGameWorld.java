@@ -12,4 +12,5 @@ public interface IGameWorld {
 	double getWidth();
 	double getLength();
 	IIterator getIterator();
+	
 }

@@ -1070,6 +1070,11 @@ public class GameWorld extends Observable implements IGameWorld {
 	public IIterator getIterator() {
 		return this.col.getIterator();
 	}
+
+	public GameWorld getTheGameWorld() {
+		return this;
+		
+	}
 	
 	
 	//Setters

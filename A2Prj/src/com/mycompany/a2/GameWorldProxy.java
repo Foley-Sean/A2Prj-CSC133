@@ -64,6 +64,8 @@ public class GameWorldProxy extends Observable implements IGameWorld {
 	public IIterator getIterator() {
 		return gw.getIterator();
 	}
+	
+
 
 	
 }

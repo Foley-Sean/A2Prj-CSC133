@@ -57,8 +57,9 @@ public class PlayerShip extends Ship implements ISteerable, IDrawable {
 	public void draw(Graphics g, Point pCmpRelPrnt) {
 		// Handles drawing of the component
 		g.setColor(this.getColor());
-		g.drawLine((int)pCmpRelPrnt.getX(), (int)pCmpRelPrnt.getY(), (int)pCmpRelPrnt.getX() + 200, (int) pCmpRelPrnt.getY() + 200);
-		g.drawRect((int)this.getLocation().getX(), (int) this.getLocation().getY(), 20, 20);
+		//g.drawLine((int)pCmpRelPrnt.getX(), (int)pCmpRelPrnt.getY(), (int)pCmpRelPrnt.getX() + 200, (int) pCmpRelPrnt.getY() + 200);
+		g.drawRect((int)this.getLocation().getX(), (int) this.getLocation().getY(), 80, 80);
+		
 	}
 	
 	
