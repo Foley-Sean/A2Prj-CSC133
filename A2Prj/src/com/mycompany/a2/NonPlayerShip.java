@@ -37,6 +37,9 @@ public class NonPlayerShip extends Ship implements IDrawable {
 		g.setColor(this.getColor());
 		//g.drawLine((int)pCmpRelPrnt.getX(), (int)pCmpRelPrnt.getY(), (int)pCmpRelPrnt.getX() + 200, (int) pCmpRelPrnt.getY() + 200);
 		g.fillRect((int)this.getLocation().getX(), (int) this.getLocation().getY(), this.getSize(), this.getSize());
+		Point p = new  Point((int)this.getLocation().getX(), (int)this.getLocation().getY());
+		this.ML.draw(g, p);
+		
 	}
 	
 

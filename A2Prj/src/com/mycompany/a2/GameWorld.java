@@ -88,7 +88,7 @@ public class GameWorld extends Observable implements IGameWorld {
 
 	public void addSpaceStation() {
 		// Create a blinking space station
-		int color = ColorUtil.WHITE;
+		int color = ColorUtil.YELLOW;
 		
 		SpaceStation BSS = new SpaceStation(color);
 		//store.add(BSS);
@@ -270,7 +270,7 @@ public class GameWorld extends Observable implements IGameWorld {
 					myStation.setLight(myStation.getLight());
 				}
 				
-				else if(this.getTime() % myStation.getBlinkRate() == 0) {
+				else if((this.getTime()/50) % myStation.getBlinkRate() == 0) {
 					//light is on
 					//check status of light
 					beacon = myStation.getLight();
@@ -394,21 +394,28 @@ public class GameWorld extends Observable implements IGameWorld {
 		// This method finds a player ship and if one exists it reloads its missiles
 		// cannot reload missiles if the ship already has max number
 		boolean playerShip = false;
+		boolean iSS = false;
 		PlayerShip ps = null;
 		IIterator itr = col.getIterator();
-		while(itr.hasNext()&& !playerShip) {
+		while(itr.hasNext() /*&& !playerShip && !iSS*/) {
 			//keep iterating until a player ship is found
 			GameObject obj = (GameObject) itr.getNext();
 			if(obj instanceof PlayerShip) {
 				ps = (PlayerShip) obj;
 				playerShip = true;
-			}	
+			}
+			if(obj instanceof SpaceStation) {
+				iSS = true;
+			}
 		}
 		if(!playerShip) {
 			System.out.println("Error: Please add player ship first");
 		}
+		if(!iSS) {
+			System.out.println("Error: Please add space station first");
+		}
 		
-		else if (playerShip) {
+		if(playerShip && iSS) {
 			int mag = ps.getMissileCount();
 			if(mag < 10) {
 				System.out.println("Reloading missiles");
@@ -981,7 +988,7 @@ public class GameWorld extends Observable implements IGameWorld {
 				final Point2D home = new Point2D(512.0, 384.0);
 				ps.setLocation(home);
 				ps.setSpeed(0);
-				ps.setDirection(0);
+				ps.setDirection(-90);
 				System.out.println("Player Ship Warped home!");
 			}
 			else if(!playerShip){

@@ -50,8 +50,7 @@ public class SteerableMissileLauncher extends MissileLauncher implements ISteera
 	@Override
 	public void draw(Graphics g, Point pCmpRelPrnt) {
 		// TODO Auto-generated method stub
-		g.setColor(this.getColor());
-		g.drawRect((int)this.getLocation().getX(), (int)this.getLocation().getY(), 11, 40);
+		super.draw(g, pCmpRelPrnt);
 	}
 	
 }
