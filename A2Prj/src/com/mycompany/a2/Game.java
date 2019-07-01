@@ -88,6 +88,9 @@ public class Game extends Form implements Runnable {
 	public static BGSounds getAudio() {
 		return bgsound;
 	}
+	public static void stopAudio() {
+		bgsound.pause();
+	}
 
 	private void createSideMenu() {
 		// Create Side Menu and add items to it

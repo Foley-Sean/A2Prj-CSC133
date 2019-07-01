@@ -1026,8 +1026,7 @@ public class GameWorld extends Observable implements IGameWorld {
 		//sound
 		if(this.Sound) {
 			gameOver.play();
-			BGSounds bgsound = Game.getAudio();
-			bgsound.pause();
+			Game.stopAudio();
 		}
 		System.out.println("Thanks for playing!");
 		System.out.println("Score = " + this.getScore());
