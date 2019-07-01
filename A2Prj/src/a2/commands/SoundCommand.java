@@ -16,19 +16,17 @@ private GameWorld gw;
 	
 	@Override 
 	public void actionPerformed(ActionEvent e) {
+		BGSounds bgs = Game.getAudio();
 		if(gw.getSound()) {
 			gw.setSound(false);
+			bgs.pause();
+			
 		}
 		else if(!gw.getSound()) {
 			gw.setSound(true);
+			bgs.play();
 		}
 		
 	}
 	
-	//handles muting and unmuting sound
-	public void toggleSound() {
-		if(!gw.getSound()) {
-			BGSounds.this.pause();
-		}
-	}
 }

@@ -71,7 +71,7 @@ public class Game extends Form implements Runnable {
 		//sound start
 		bgsound = new BGSounds("Half Step Tripple Threat - no drums.mp3");
 		bgsound.run();
-		
+			
 		this.show();
 		
 		UITimer timer = new UITimer(this);
