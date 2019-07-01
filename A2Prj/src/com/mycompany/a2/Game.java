@@ -137,22 +137,22 @@ public class Game extends Form implements Runnable {
 		IncreasePlayerSpeedCommand myAccel = new IncreasePlayerSpeedCommand(gw);
 		addKeyListener(-91, myAccel);
 		addKeyListener('i', myAccel);
-		addKeyListener('w', myAccel);
+		//addKeyListener('w', myAccel);
 		//Deccel PS
 		DecreasePlayerSpeedCommand myDeccel = new DecreasePlayerSpeedCommand(gw);
 		addKeyListener(-92, myDeccel);
 		addKeyListener('d', myDeccel);
-		addKeyListener('s', myDeccel);
+		//addKeyListener('s', myDeccel);
 		//Turn PS Left
 		TurnPsLeftCommand myTurnLeft = new TurnPsLeftCommand(gw);
 		addKeyListener(-93, myTurnLeft);
 		addKeyListener('l', myTurnLeft);
-		addKeyListener('a', myTurnLeft);
+		//addKeyListener('a', myTurnLeft);
 		//Turn PS Right
 		TurnPsRightCommand myTurnRight = new TurnPsRightCommand(gw);
 		addKeyListener(-94, myTurnRight);
 		addKeyListener('r', myTurnRight);
-		addKeyListener('d', myTurnRight);
+		//addKeyListener('d', myTurnRight);
 		//Turn MML Left
 		TurnMlLeftCommand myRotateLeft = new TurnMlLeftCommand(gw);
 		addKeyListener(44, myRotateLeft);

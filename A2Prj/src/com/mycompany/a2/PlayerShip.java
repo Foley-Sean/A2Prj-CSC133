@@ -41,14 +41,14 @@ public class PlayerShip extends Ship implements ISteerable, IDrawable {
 	public void rotateRight() {
 		// This is an override of the rotateRight function in ISteerable
 		// Rotates the player ship right by a small amount.
-		this.setDirection(this.getDirection() + 10);
+		this.setDirection(this.getDirection() + 33);
 	}
 
 	@Override
 	public void rotateLeft() {
 		// This is an override of the rotateLeft function in ISteerable
 		// Rotates the player ship left by a small amount
-		this.setDirection(this.getDirection() - 10);
+		this.setDirection(this.getDirection() - 33);
 		
 		
 	}
