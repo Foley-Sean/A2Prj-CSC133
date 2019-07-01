@@ -59,6 +59,7 @@ public class PlayerShip extends Ship implements ISteerable, IDrawable {
 		g.setColor(this.getColor());
 		//g.drawLine((int)pCmpRelPrnt.getX(), (int)pCmpRelPrnt.getY(), (int)pCmpRelPrnt.getX() + 200, (int) pCmpRelPrnt.getY() + 200);
 		g.drawRect((int)this.getLocation().getX(), (int) this.getLocation().getY(), this.getSize(), this.getSize(), 3);
+		//if(this.getLocation().getX() + this.getSize() >= this.
 		Point p = new  Point((int)this.getLocation().getX(), (int)this.getLocation().getY());
 		this.MML.draw(g, p);
 	}

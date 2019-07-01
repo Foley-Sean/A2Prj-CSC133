@@ -9,11 +9,13 @@ import com.codename1.ui.geom.Point;
 import com.codename1.ui.geom.Point2D;
 
 public class MapView extends Container implements Observer {
-	Point loc = new Point(getX(), getY());
+	private Point loc = new Point(getX(), getY());
 	//Point2D pCmpRelScrn = new Point2D(getAbsoluteX(), getAbsoluteY());
-	IGameWorld gw;
-	GameObjectCollection gc;
-	IIterator itr;
+	private IGameWorld gw;
+	private GameObjectCollection gc;
+	private IIterator itr;
+	//private double width;
+	//private double height;
 	public MapView(GameWorld gw2) {
 		//find way to set to black
 		//this.getAllStyles().setBgColor(ColorUtil.BLACK);
@@ -29,10 +31,13 @@ public class MapView extends Container implements Observer {
 		gw = (IGameWorld) data;
 		itr = gw.getIterator();
 		this.repaint();	
+		
 	}
 	
 	@Override
 	public void paint(Graphics g) {
+		//super.paint(g);
+		
 		while(itr.hasNext()) {
 			GameObject obj = (GameObject)itr.getNext();
 			if(obj instanceof IDrawable) {
@@ -41,5 +46,7 @@ public class MapView extends Container implements Observer {
 		}
 		
 	}
+	
+
 
 }

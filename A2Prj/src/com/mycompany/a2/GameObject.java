@@ -3,6 +3,7 @@ package com.mycompany.a2;
 import  java.util.Random;
 
 import com.codename1.charts.util.ColorUtil;
+import com.codename1.ui.Container;
 import  com.codename1.ui.geom.Point2D; 	// point 2d x,y coordinates
 
 
@@ -12,10 +13,11 @@ public abstract class GameObject {
 	private int color;
 	private Random random = new Random();
 	private final double MIN_X_Y = 0.0;
-	private final double MAX_X = 1024.0;
-	private final double MAX_Y = 768.0;
+	private double MAX_X = 1024.0;
+	private double MAX_Y = 768.0;
 	
 	public GameObject(int color) {
+		
 		this.color = color;
 		if(color == ColorUtil.LTGRAY) {
 			

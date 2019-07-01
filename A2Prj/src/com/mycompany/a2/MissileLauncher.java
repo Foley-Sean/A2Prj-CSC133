@@ -17,8 +17,14 @@ public class MissileLauncher extends MoveableGameObject implements IDrawable {
 	public void draw(Graphics g, Point pCmpRelPrnt) {
 		// TODO Auto-generated method stub
 		g.setColor(this.getColor());
-		g.drawLine(pCmpRelPrnt.getX(), pCmpRelPrnt.getY(), pCmpRelPrnt.getX() - 30 ,
-				pCmpRelPrnt.getY() - 30);
+		int x = (int)(pCmpRelPrnt.getX() /*+ this.getLocation().getX()*/);
+		int y = (int)(pCmpRelPrnt.getY() /*+ this.getLocation().getY()*/);
+		
+		double angle = Math.toRadians(90 - this.getDirection());
+		double deltaX = Math.cos(angle);
+		double deltaY = Math.sin(angle);
+		
+		g.drawLine(x, y, (int) (x + (50 *deltaX)), (int)(y + (50 *deltaY)));
 	}
 	
 }
