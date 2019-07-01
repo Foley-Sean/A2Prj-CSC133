@@ -2,6 +2,7 @@ package com.mycompany.a2;
 import java.util.Observable;
 import java.util.Observer;
 
+import com.codename1.charts.util.ColorUtil;
 import com.codename1.ui.Container;
 import com.codename1.ui.Graphics;
 import com.codename1.ui.geom.Point;
@@ -14,9 +15,13 @@ public class MapView extends Container implements Observer {
 	GameObjectCollection gc;
 	IIterator itr;
 	public MapView(GameWorld gw2) {
+		//find way to set to black
+		//this.getAllStyles().setBgColor(ColorUtil.BLACK);
+		//this.repaint();
 		gw = gw2;
 		gc = gw2.getWorld();
 		itr = gc.getIterator();
+		
 	}
 	@Override
 	public void update(Observable observable, Object data) {

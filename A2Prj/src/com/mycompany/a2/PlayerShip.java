@@ -10,9 +10,9 @@ public class PlayerShip extends Ship implements ISteerable, IDrawable {
 	
 	public PlayerShip(int color, int speed, int dir) {
 		// player ship construction
-		super(color, speed, dir);
+		super(color, speed, dir-90);
 		
-		this.MML = new SteerableMissileLauncher(getLocation(), color, speed, dir);
+		this.MML = new SteerableMissileLauncher(getLocation(), color, speed, dir-90);
 		
 		
 	}

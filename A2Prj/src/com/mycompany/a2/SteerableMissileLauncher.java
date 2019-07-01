@@ -54,6 +54,4 @@ public class SteerableMissileLauncher extends MissileLauncher implements ISteera
 		g.drawRect((int)this.getLocation().getX(), (int)this.getLocation().getY(), 11, 40);
 	}
 	
-	
-
 }

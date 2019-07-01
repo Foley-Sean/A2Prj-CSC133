@@ -1,7 +1,10 @@
 package com.mycompany.a2;
 import java.util.Random;
 
-public class SpaceStation extends FixedGameObject {
+import com.codename1.ui.Graphics;
+import com.codename1.ui.geom.Point;
+
+public class SpaceStation extends FixedGameObject implements IDrawable {
 	private Random random = new Random();
 	private int blinkRate;
 	private boolean light;
@@ -39,6 +42,20 @@ public class SpaceStation extends FixedGameObject {
 		
 		String myDesc = " blink rate = " +  getBlinkRate();
 		return "Space Station: " + parentDesc + myDesc;
+		
+	}
+
+	@Override
+	public void draw(Graphics g, Point pCmpRelPrnt) {
+		// TODO Auto-generated method stub
+		g.setColor(this.getColor());
+		if(this.getLight()) {
+			g.drawArc((int)this.getLocation().getX(), (int)this.getLocation().getY(), 80, 50, 0, 360);
+		}
+		else if(!this.getLight()) {
+			g.fillArc((int)this.getLocation().getX(), (int)this.getLocation().getY(), 80, 50, 0, 360);
+
+		}
 		
 	}
 

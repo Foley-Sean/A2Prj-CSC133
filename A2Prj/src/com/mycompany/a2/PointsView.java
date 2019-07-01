@@ -22,7 +22,7 @@ public class PointsView extends Container implements Observer {
 		
 		this.pointsValueLabel.setText("" + gw.getScore());
 		this.livesValueLabel.setText("" + gw.getLives());
-		this.timeValueLabel.setText("" + gw.getTime());
+		this.timeValueLabel.setText("" + gw.getTime()/50);
 		this.soundOnOff.setText(""+ gw.whatSound());
 		this.missileValueLabel.setText("" + gw.getMissileCount());
 		
