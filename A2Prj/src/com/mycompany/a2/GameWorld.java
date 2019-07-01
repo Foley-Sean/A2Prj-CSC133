@@ -19,6 +19,9 @@ public class GameWorld extends Observable implements IGameWorld {
 	private boolean Sound;
 	private int score;
 	private int time;
+	private static Sounds fireMissile; 
+	private static Sounds rotateLauncher;
+	private static Sounds gameOver;
 	
 	public void init() {
 		this.setLength(768);
@@ -29,7 +32,9 @@ public class GameWorld extends Observable implements IGameWorld {
 		this.setTime(0);
 		this.setSound(true);
 		
-	
+		fireMissile = new Sounds("96692__cgeffex__asteroids-ship-fire.wav");
+		rotateLauncher = new Sounds("23216__noizemaker__nzp-bmw-1150gs-fuel-pump.wav");
+		gameOver = new Sounds("321910__bboyjoe-15__you-lose.mp3");
 	}
 
 	public void addAsteroid() {
@@ -153,6 +158,10 @@ public class GameWorld extends Observable implements IGameWorld {
 					this.setMissileCount(this.getMissileCount() - 1);
 					Missile msl = new Missile(ps.getLoc(), MML.getDirection(), ps.getSpeed(), ps.getColor(), ps.getShip());
 					col.add(msl);
+					//play sound
+					if(this.Sound) {
+						fireMissile.play();
+					}
 					System.out.println("PLAYERSHIP has fired a missile!");
 					
 					msl.toString();
@@ -188,6 +197,10 @@ public class GameWorld extends Observable implements IGameWorld {
 					nps.setMissileCount(nps.getMissileCount() - 1);
 					Missile msl = new Missile(nps.getLoc(), nps.getDirection(), nps.getSpeed(), nps.getColor(), nps.getShip());
 					col.add(msl);
+					//play sound
+					if(this.Sound) {
+						fireMissile.play();
+					}
 					System.out.println("NONPLAYERSHIP has fired a missile!");
 					msl.toString();
 					System.out.println(msl);
@@ -352,7 +365,10 @@ public class GameWorld extends Observable implements IGameWorld {
 			SteerableMissileLauncher MML;
 			MML = ps.getMissleLauncher();
 			MML.rotateLeft();
-		
+			//sound
+			if(this.Sound) {
+				rotateLauncher.play();
+			}
 			System.out.println("Dir of MML = " + MML.getDirectionML());
 		}
 
@@ -383,6 +399,10 @@ public class GameWorld extends Observable implements IGameWorld {
 			SteerableMissileLauncher MML;
 			MML = ps.getMissleLauncher();
 			MML.rotateRight();
+			//sound
+			if(this.Sound) {
+				rotateLauncher.play();
+			}
 			System.out.println("Dir of MML = " + MML.getDirectionML());
 		}
 
@@ -1001,12 +1021,16 @@ public class GameWorld extends Observable implements IGameWorld {
 	}
 	
 	public void gameOver() {
+		//sound
+		if(this.Sound) {
+			gameOver.play();
+		}
 		System.out.println("Thanks for playing!");
 		System.out.println("Score = " + this.getScore());
-		System.out.println("Time = " + this.getTime());
+		System.out.println("Time = " + this.getTime()/50);
 		
 		Boolean bOk = Dialog.show("Game Over", "Do you want to try again?" + "\n" + "Score: " + this.getScore()
-		+ "\n" + "Time:" + this.getTime(), "Yes", "No");
+		+ "\n" + "Time:" + this.getTime()/50, "Yes", "No");
 		if(bOk) {
 			new Game();
 		}

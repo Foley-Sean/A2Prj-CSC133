@@ -26,5 +26,7 @@ public class MissileLauncher extends MoveableGameObject implements IDrawable {
 		
 		g.drawLine(x, y, (int) (x + (50 *deltaX)), (int)(y + (50 *deltaY)));
 	}
+
+	
 	
 }

@@ -17,7 +17,7 @@ public class Missile extends MoveableGameObject implements IDrawable {
 		this.setColor(getColor());
 		this.setDirection(direction);
 		this.setSpeed(speed + 10);
-		this.fuelLevel = 15;
+		this.fuelLevel = 750;  //15 * 50
 		this.ps = ship;
 		
 	}
@@ -78,7 +78,7 @@ public class Missile extends MoveableGameObject implements IDrawable {
 	public void draw(Graphics g, Point pCmpRelPrnt) {
 		// TODO Auto-generated method stub
 		g.setColor(this.getColor());
-		g.drawRect((int)this.getLocation().getX(), (int)this.getLocation().getY(), 10, 20);
+		g.fillRect((int)this.getLocation().getX(), (int)this.getLocation().getY(), 5, 5);
 	}
 		
 	

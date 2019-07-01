@@ -63,7 +63,8 @@ public class PlayerShip extends Ship implements ISteerable, IDrawable {
 		Point p = new  Point((int)this.getLocation().getX(), (int)this.getLocation().getY());
 		this.MML.draw(g, p);
 	}
-	
+
+
 	
 
 }

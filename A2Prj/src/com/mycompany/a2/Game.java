@@ -52,6 +52,7 @@ public class Game extends Form implements Runnable {
 	
 	private GameWorld gw;
 	private static BGSounds bgsound;
+	//private static Sounds fireMissile;
 	public Game() {
 		gw = new GameWorld();
 		
@@ -68,8 +69,9 @@ public class Game extends Form implements Runnable {
 		pv.getStyle().setBorder(Border.createLineBorder(3, ColorUtil.BLACK));
 		add(BorderLayout.CENTER, mv);
 		mv.getStyle().setBorder(Border.createLineBorder(3, ColorUtil.MAGENTA));
-		//sound start
+		//sounds start
 		bgsound = new BGSounds("Half Step Tripple Threat - no drums.mp3");
+		//fireMissile = new Sounds("96692__cgeffex__asteroids-ship-fire.wav");
 		bgsound.run();
 			
 		this.show();
