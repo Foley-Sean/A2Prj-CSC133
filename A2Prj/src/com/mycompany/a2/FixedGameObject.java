@@ -1,7 +1,7 @@
 package com.mycompany.a2;
 
 
-public abstract class FixedGameObject extends GameObject {
+public abstract class FixedGameObject extends GameObject  {
 	private int speed;
 	private int direction;
 	private static int nextId = 0;

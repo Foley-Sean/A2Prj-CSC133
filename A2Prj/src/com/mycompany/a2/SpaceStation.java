@@ -48,12 +48,16 @@ public class SpaceStation extends FixedGameObject implements IDrawable {
 	@Override
 	public void draw(Graphics g, Point pCmpRelPrnt) {
 		// TODO Auto-generated method stub
-		g.setColor(this.getColor());
+		//g.setColor(this.getColor());
+		
 		if(this.getLight()) {
-			g.drawArc((int)this.getLocation().getX(), (int)this.getLocation().getY(), 80, 50, 0, 360);
+			g.setColor(this.getColor());
+			g.fillArc((int)this.getLocation().getX(), (int)this.getLocation().getY(), 80, 50, 0, 360);
+			
 		}
 		else if(!this.getLight()) {
-			g.fillArc((int)this.getLocation().getX(), (int)this.getLocation().getY(), 80, 50, 0, 360);
+			g.setColor(this.getColor());
+			g.drawArc((int)this.getLocation().getX(), (int)this.getLocation().getY(), 80, 50, 0, 360);
 
 		}
 		

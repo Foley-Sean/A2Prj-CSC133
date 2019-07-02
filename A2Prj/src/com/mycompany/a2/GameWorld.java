@@ -286,14 +286,8 @@ public class GameWorld extends Observable implements IGameWorld {
 				else if((this.getTime()/50) % myStation.getBlinkRate() == 0) {
 					//light is on
 					//check status of light
-					beacon = myStation.getLight();
 					//change to opposite value to "blink"
-					if(beacon) {
-						myStation.setLight(false);
-					}
-					else if(!beacon) {
-						myStation.setLight(true);
-					}
+					myStation.setLight(!myStation.getLight());
 				}
 				
 			}//end if spacestation
@@ -1094,7 +1088,7 @@ public class GameWorld extends Observable implements IGameWorld {
 	}
 	
 	public int getTime() {
-		return time;
+		return this.time;
 	}
 	
 	public int getScore() {
